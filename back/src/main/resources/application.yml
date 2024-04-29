@@ -1,0 +1,11 @@
+spring:
+  application:
+    name : "factor-ecommerce"
+  datasource:
+  url: jdbc:mysql://mysql-container:3306/db_name
+  username: your_username
+  password: your_password
+  jpa:
+  database-platform: org.hibernate.dialect.MySQL5Dialect
+  hibernate:
+  ddl-auto: update
