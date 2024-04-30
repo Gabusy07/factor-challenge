@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: "app_factor-ecommerce"
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
+
+###############################################################################################
+#                     DATASOURCE
+###############################################################################################
+datasource:
+  url: ${DB_URL}
+  username: ${DB_USERNAME}
+  password: ${DB_PASSWORD}
+  name: f-ecommerce
+  initialization-mode: always
+jpa:
+  database-platform: org.hibernate.dialect.MySQL5Dialect
+  hibernate:
+    ddl-auto: create
