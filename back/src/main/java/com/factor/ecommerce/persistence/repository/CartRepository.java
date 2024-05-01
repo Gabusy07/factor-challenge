@@ -1,0 +1,7 @@
+package com.factor.ecommerce.persistence.repository;
+
+import com.factor.ecommerce.model.Cart;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CartRepository extends JpaRepository<Cart, Integer> {
+}
