@@ -13,7 +13,12 @@ datasource:
   password: ${DB_PASSWORD}
   name: f-ecommerce
   initialization-mode: always
-jpa:
-  database-platform: org.hibernate.dialect.MySQL5Dialect
-  hibernate:
-    ddl-auto: create
+  jpa:
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL5Dialect
+        format_sql: false
+    show-sql: true

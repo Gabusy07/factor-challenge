@@ -24,11 +24,12 @@ public class Cart{
     @Enumerated(EnumType.STRING)
     private CartType cartType;
 
+    /*
     @ManyToMany
     @JoinTable(name = "cart_product",
             joinColumns = @JoinColumn(name = "cart_id"),
             inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products;
+    private Set<Product> products;*/
 
     private Cart() {};
 
@@ -40,9 +41,10 @@ public class Cart{
         return totalPrice;
     }
 
+    /*
     public Set<Product> getProducts() {
         return products;
-    }
+    }*/
 
     public CartType getCartType() {
         return cartType;
