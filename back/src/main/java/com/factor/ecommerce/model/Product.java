@@ -24,9 +24,9 @@ public class Product{
     @Column(name = "image", nullable = true, length = 300)
     private String image;
 
-    /*
+
     @ManyToMany(mappedBy = "products")
-    private Set<Cart> carts;*/
+    private Set<Cart> carts;
 
     private Product() {}
 
@@ -54,10 +54,10 @@ public class Product{
         return image;
     }
 
-    /*
+
     public Set<Cart> getCarts() {
         return carts;
-    }*/
+    }
 
     public boolean increaseQuantity(Short amount) {
         if (amount < 0) {
