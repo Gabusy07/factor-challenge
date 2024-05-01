@@ -3,8 +3,9 @@ package com.factor.ecommerce.model;
 import com.factor.ecommerce.utils.CartType;
 import jakarta.persistence.*;
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 @Table(name = "carts")
@@ -25,11 +26,8 @@ public class Cart{
     private CartType cartType;
 
 
-    @ManyToMany
-    @JoinTable(name = "cart_product",
-            joinColumns = @JoinColumn(name = "cart_id"),
-            inverseJoinColumns = @JoinColumn(name = "product_id"))
-    private Set<Product> products;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ProductItem> productOrders;
 
     private Cart() {};
 
@@ -42,8 +40,8 @@ public class Cart{
     }
 
 
-    public Set<Product> getProducts() {
-        return products;
+    public List<ProductItem> getProducts() {
+        return productOrders;
     }
 
     public CartType getCartType() {
@@ -55,11 +53,20 @@ public class Cart{
         return isActive;
     }
 
+    public void calTotalAmount() {
+        double total = 0;
+        for (ProductItem productOrder : productOrders) {
+            total += productOrder.getProduct().getPrice();
+        }
+        this.totalPrice = total;
+    }
+
     public static class Builder {
         private Integer id;
         private double totalPrice;
         private CartType cartType;
         private Boolean isActive;
+        private Arrays productOrders;
 
 
         public Cart.Builder setId(Integer id) {
@@ -81,6 +88,7 @@ public class Cart{
             this.isActive = isActive;
             return this;
         }
+
 
         public Cart build() {
             Cart cart = new Cart();

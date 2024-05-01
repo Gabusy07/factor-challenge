@@ -16,17 +16,14 @@ public class Product{
     @Column(name = "name", nullable = false, length = 50)
     private String name;
     @Column(name = "quantity", nullable = false)
-    private Integer quantity;
+    private Integer quantity = 0;
     @Column(name = "code", nullable = true, length = 25)
     private String code;
-    @Column(name = "price", nullable = false)
+    @Column(name = "price", nullable = true)
     private Double price;
     @Column(name = "image", nullable = true, length = 300)
     private String image;
 
-
-    @ManyToMany(mappedBy = "products")
-    private Set<Cart> carts;
 
     private Product() {}
 
@@ -55,10 +52,6 @@ public class Product{
     }
 
 
-    public Set<Cart> getCarts() {
-        return carts;
-    }
-
     public boolean increaseQuantity(Short amount) {
         if (amount < 0) {
             return false;
@@ -76,7 +69,6 @@ public class Product{
     }
 
     public static class Builder {
-
         private Integer id;
         private String name;
         private Integer quantity;
