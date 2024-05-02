@@ -1,9 +1,12 @@
 section {
     flex-direction: row;
-    min-width: 325px;
-    max-width: 60vw;
+    min-width: 300px;
+    max-width: 55vw;
+    min-height: 75vh;
     margin: 0 auto 72px;
+    margin-top: 5rem;
     opacity: 0;
+    background-color: rgb(228, 234, 190);
     animation: aparecer 3s ease forwards; 
     }
     @keyframes aparecer {

@@ -25,10 +25,11 @@ import { OrderDetailsComponent } from './pages/order-details/order-details.compo
     HeaderComponent,
     CardComponent,
     OrderDetailsComponent
+    
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
