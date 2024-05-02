@@ -1,0 +1,14 @@
+<button
+  class="btn {{ color }}"
+  [disabled]="disabled"
+  [class.btn__disabled]="disabled"
+  [ngStyle]="{ width: width, height: height, 'border-radius': borderRadius }"
+>
+
+  <div class="btn__img" *ngIf="img">
+    <img [src]="img" />
+  </div>
+  <span
+    >{{ label }}</span
+  >
+</button>
