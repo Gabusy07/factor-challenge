@@ -4,22 +4,22 @@
   
       <div class="flex items-end gap-x-4 w-5/4 mx-auto">
         <app-input [placeholder]="'buscar producto'"></app-input>
-        <app-button [color]="'light'" [height]="'2.25rem'" [width]="'6rem'"></app-button>
+        <app-button [color]="'light'" [height]="'2.25rem'" [width]="'6rem'" [label]="'Buscar'"></app-button>
       </div>
   
-      <div class="float-right mt-auto sm:mt-3 flex gap-x-10">
-        <div id="lenguage" class="dropdown">
-          <span> cerrar sesion</span>
+      
+        <div class="dropdown mr-10">
+          <span>usuario</span>
           <ul class="dropdown-content rounded-lg w-full">
                   <li class="dropdown-item rounded">
-                    <p>si</p>
+                    <p>perfil</p>
                   </li>
                   <li class="dropdown-item rounded">
-                    <p>no</p>
+                    <p>cerrar sesion</p>
                   </li>
           </ul>
         </div>
-      </div>
+     
     </div>
   </header>
 

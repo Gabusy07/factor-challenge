@@ -14,48 +14,18 @@
       font-weight: 600;
       line-height: 16px;
     }
-    &__mobile-label {
-      font-size: 15px;
-      font-weight: 700;
-    }
 
     &__disabled > * {
       pointer-events: none;
     }
-    &__icon-before {
-      margin-right: 9px;
-      display: flex;
-    }
-  
-    &__icon-after {
-      margin-left: 9px;
-      display: flex;
-    }
-  }
-  
-  
-  .white-black {
-    background-color: white;
-    border: 1.5px solid #e0e0e0;
-    height: 35px;
-    left: 48px;
-    padding: 7px 15px 7px 15px;
-    width: 160px;
-    border-radius: 100px;
-    &:hover,
-    .hover {
-      background-color: #f1f1f1;
-      border-color: #e0e0e0;
-    }
   
   }
-  
   
   .light {
-    background: #f0f3fd;
+    background: #dce1f0;
     color: #010510;
     &:hover {
-      background: darken(#f0f3fd, 10%);
+      background: darken(#dce1f0, 10%);
     }
     &:disabled {
       background: #d1d5db;
@@ -70,6 +40,22 @@
   
     &:hover {
       background: darken(#374151, 5%);
+    }
+  
+  
+    &:disabled {
+      background: #d1d5db;
+      color: #fff;
+      cursor: no-drop;
+    }
+  }
+
+  .success {
+    background: #045d1c;
+    color: #fff;
+  
+    &:hover {
+      background: lighten(#045d1c, 5%);
     }
   
   

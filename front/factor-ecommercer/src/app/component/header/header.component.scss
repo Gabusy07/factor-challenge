@@ -9,7 +9,6 @@ header {
     position: relative;
     display: inline-block;
     transition-delay: 85s;
-    /* display: none; */
   }
 
   .dropdown-content {
@@ -19,10 +18,11 @@ header {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
     padding: 1px 10px;
     z-index: var(--z-priority);
-    min-width: 45px;
-    opacity: 0.75;
+    min-width: 10rem;
+    opacity: 0.95;
     transform: translateX(-50%);
     left: 50%;
+    z-index: var(--z-priority);
   }
 
   .dropdown:hover .dropdown-content {

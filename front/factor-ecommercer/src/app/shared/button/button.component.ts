@@ -13,7 +13,6 @@ export class ButtonComponent {
   @Input() width = 'auto';
   @Input() height = '38px';
   @Input() img = '';
-  @Input() mobile = false;
   @Input() borderRadius= '30px'
 
 }

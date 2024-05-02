@@ -11,6 +11,7 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { MainLayoutComponent } from './layout/main-layout/main-layout.component';
 import { HeaderComponent } from './component/header/header.component';
 import { CardComponent } from './component/card/card.component';
+import { OrdeDetailsComponent } from './pages/orde-details/orde-details.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { CardComponent } from './component/card/card.component';
     ErrorPageComponent,
     MainLayoutComponent,
     HeaderComponent,
-    CardComponent
+    CardComponent,
+    OrdeDetailsComponent
   ],
   imports: [
     BrowserModule,
