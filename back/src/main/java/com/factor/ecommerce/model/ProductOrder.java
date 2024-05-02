@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 
 
 @Entity
-public class ProductItem {
+public class ProductOrder {
 
 
     @Id
@@ -22,7 +22,7 @@ public class ProductItem {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    private ProductItem(){}
+    private ProductOrder(){}
 
     public Cart getCarts() {
         return cart;
@@ -84,8 +84,8 @@ public class ProductItem {
             return this;
         }
 
-        public ProductItem build() {
-            ProductItem order = new ProductItem();
+        public ProductOrder build() {
+            ProductOrder order = new ProductOrder();
             order.quantityOrder = this.quantityOrder;
             order.product = this.product;
             order.cart = this.cart;

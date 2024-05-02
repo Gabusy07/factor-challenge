@@ -1,7 +1,7 @@
 package com.factor.ecommerce.controller.request;
 
 
-public class ProductItemRequest {
+public class ProductOrderRequest {
 
     private Integer quantityOrder;
 
@@ -27,23 +27,23 @@ public class ProductItemRequest {
         private Integer productId;
         private Integer cartId;
 
-        public ProductItemRequest.Builder quantityOrder(Integer quantityOrder) {
+        public ProductOrderRequest.Builder quantityOrder(Integer quantityOrder) {
             this.quantityOrder = quantityOrder;
             return this;
         }
 
-        public ProductItemRequest.Builder productId(Integer productId) {
+        public ProductOrderRequest.Builder productId(Integer productId) {
             this.productId = productId;
             return this;
         }
 
-        public ProductItemRequest.Builder cartId(Integer cartId) {
+        public ProductOrderRequest.Builder cartId(Integer cartId) {
             this.cartId = cartId;
             return this;
         }
 
-        public ProductItemRequest build() {
-            ProductItemRequest pr = new ProductItemRequest();
+        public ProductOrderRequest build() {
+            ProductOrderRequest pr = new ProductOrderRequest();
             pr.quantityOrder = this.quantityOrder;
             pr.productId = this.productId;
             pr.cartId = this.cartId;

@@ -27,7 +27,7 @@ public class Cart{
 
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductItem> productOrders;
+    private List<ProductOrder> productOrders;
 
     private Cart() {};
 
@@ -40,7 +40,7 @@ public class Cart{
     }
 
 
-    public List<ProductItem> getProducts() {
+    public List<ProductOrder> getProducts() {
         return productOrders;
     }
 
@@ -55,7 +55,7 @@ public class Cart{
 
     public void calTotalAmount() {
         double total = 0;
-        for (ProductItem productOrder : productOrders) {
+        for (ProductOrder productOrder : productOrders) {
             total += productOrder.getProduct().getPrice();
         }
         this.totalPrice = total;
