@@ -1,6 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { ROUTES, Router } from '@angular/router';
-import { PagesRoutes } from 'src/app/pages/routes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-card',
@@ -19,6 +18,6 @@ export class CardComponent {
   }
 
   buyProduct(): void {
-      this.router.navigate([PagesRoutes.ROUTES.orderDetails]);
+      this.router.navigate(["/order-details"]);
     }
 }

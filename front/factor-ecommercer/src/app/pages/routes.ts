@@ -4,7 +4,7 @@ export class PagesRoutes {
       path: '',
     },
     orderDetails: {
-      path: '/order-details',
+      path: 'order-details',
     },
   };
 }

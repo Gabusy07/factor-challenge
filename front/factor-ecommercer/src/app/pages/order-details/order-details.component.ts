@@ -8,4 +8,7 @@ import { Component } from '@angular/core';
 export class OrderDetailsComponent {
 
 
+  orders: number[] = [1, 2, 3, 4, 5];
+
+
 }
