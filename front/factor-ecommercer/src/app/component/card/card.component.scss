@@ -6,6 +6,7 @@
   margin: 0 auto 72px;
   opacity: 0;
   animation: aparecer 3s ease forwards;
+  cursor: pointer;
 }
 @keyframes aparecer {
   from {
@@ -17,10 +18,8 @@
 }
 
 .img {
-    aspect-ratio: 1 / 1;
-    object-fit: cover;
-    transition:
-      filter,
-      transform,
-      filter 0.5s;
+    aspect-ratio: 5 / 4;
+    max-width: 100%;
+    height: auto; 
+    object-fit: cover; 
   }
