@@ -1,0 +1,16 @@
+section {
+    flex-direction: row;
+    min-width: 325px;
+    max-width: 60vw;
+    margin: 0 auto 72px;
+    opacity: 0;
+    animation: aparecer 3s ease forwards; 
+    }
+    @keyframes aparecer {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
