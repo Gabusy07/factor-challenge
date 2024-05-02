@@ -12,6 +12,7 @@ import { MainLayoutComponent } from './layout/main-layout/main-layout.component'
 import { HeaderComponent } from './component/header/header.component';
 import { CardComponent } from './component/card/card.component';
 import { OrderDetailsComponent } from './pages/order-details/order-details.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -30,6 +31,7 @@ import { OrderDetailsComponent } from './pages/order-details/order-details.compo
   imports: [
     BrowserModule,
     AppRoutingModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
