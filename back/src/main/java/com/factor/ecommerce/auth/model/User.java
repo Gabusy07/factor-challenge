@@ -1,5 +1,7 @@
 package com.factor.ecommerce.auth.model;
 
+import com.factor.ecommerce.auth.utils.UserType;
+
 import java.util.Objects;
 
 public class User {
@@ -7,8 +9,10 @@ public class User {
     private String username;
     private String password;
 
-    private User() {}
+    private UserType userType;
 
+    public User() {
+    }
 
     public Integer getId() {
         return id;
@@ -34,16 +38,7 @@ public class User {
         this.password = password;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(id, user.id) && Objects.equals(username, user.username) && Objects.equals(password, user.password);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, username, password);
+    public UserType getUserType() {
+        return userType;
     }
 }
