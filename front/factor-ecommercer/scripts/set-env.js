@@ -1,12 +1,10 @@
-/* tslint:disable */
-// @ts-nocheck
 const { writeFile } = require("fs");
 const packageJson = require("../package.json");
 const STAGE = process.env.NODE_ENV || "dev";
 
 const defaultConfigFile = require(`../src/environments/config`);
-const currentConfigFile = require(`../src/environments/config`);
-const envConfig = require("dotenv").config({ path: `./.env.${COUNTRY}.${STAGE}` });
+const currentConfigFile = require(`../src/environments/config.${STAGE}`);
+const envConfig = require("dotenv").config({ path: `./.env.${STAGE}` });
 const targetPath = `./src/environments/environment.${STAGE}.ts`;
 
 function writeFileUsingFS(targetPath, environmentFileContent) {
@@ -31,5 +29,3 @@ const environmentFileContent = `
 `;
 
 writeFileUsingFS(targetPath, environmentFileContent);
-
-/* tslint:enable */

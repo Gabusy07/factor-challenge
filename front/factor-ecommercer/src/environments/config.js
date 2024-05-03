@@ -1,5 +1,5 @@
 module.exports = {
   production: false,
-  FRONT_ENV: "",
+  ENV: "",
   API_BASE_URL: "",
 };
