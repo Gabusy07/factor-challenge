@@ -26,7 +26,7 @@ public class ProductController {
 
     @GetMapping("{id}")
     public ResponseEntity<Product> getOne(@PathVariable Integer id){
-        return ResponseEntity.ok().body(productService.getProduct(id));
+        return ResponseEntity.ok().body(productService.getProduct(id).get());
     }
 
     @PostMapping("create")

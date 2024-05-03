@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+
 @Service
 public class CartServiceImpl implements CartService {
 
@@ -39,12 +40,7 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Cart getCart(Integer id) {
-
-        Optional<Cart> op = cartRepository.findById(id);
-        if (op.isPresent()) {
-            return op.get();
-        }
-        return null;
+    public Optional<Cart> getCart(Integer id) {
+        return cartRepository.findById(id);
     }
 }

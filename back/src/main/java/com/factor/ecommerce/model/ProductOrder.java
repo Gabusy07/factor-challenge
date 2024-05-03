@@ -48,21 +48,6 @@ public class ProductOrder {
         this.quantityOrder = quantityOrder;
     }
 
-    public boolean increaseQuantity(Integer amount) {
-        if (amount < product.getQuantity()) {
-            return false;
-        }
-        this.quantityOrder += amount;
-        return true;
-    }
-
-    public boolean decreaseQuantity(Integer amount) {
-        if (amount < product.getQuantity() || amount > this.quantityOrder) {
-            return false;
-        }
-        this.quantityOrder -= amount;
-        return true;
-    }
 
     public static class Builder {
         private Integer quantityOrder;

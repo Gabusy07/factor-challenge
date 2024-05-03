@@ -8,8 +8,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
-@RequestMapping("/api/v1/items/")
+@RequestMapping("/api/v1/orders/")
 public class ProductOrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductController.class);
@@ -22,12 +24,17 @@ public class ProductOrderController {
 
     @GetMapping("all")
     public ResponseEntity<?> getAll(){
+
         return ResponseEntity.ok().body(productOrderService.getAll(1));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<ProductOrder> getOne(@PathVariable Integer id){
-        return ResponseEntity.ok().body(productOrderService.getOrder(id));
+        Optional<ProductOrder>  op= productOrderService.getOrder(id);
+        if (op.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok().body(op.get());
     }
 
     @PostMapping("create")

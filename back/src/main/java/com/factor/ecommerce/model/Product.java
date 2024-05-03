@@ -2,7 +2,6 @@ package com.factor.ecommerce.model;
 
 import jakarta.persistence.*;
 import java.util.Objects;
-import java.util.Set;
 
 
 @Entity
@@ -15,8 +14,8 @@ public class Product{
 
     @Column(name = "name", nullable = false, length = 50)
     private String name;
-    @Column(name = "quantity", nullable = false)
-    private Integer quantity = 0;
+    @Column(name = "stock", nullable = false)
+    private Integer stock = 0;
     @Column(name = "code", nullable = true, length = 25)
     private String code;
     @Column(name = "price", nullable = true)
@@ -35,8 +34,8 @@ public class Product{
         return name;
     }
 
-    public Integer getQuantity() {
-        return quantity;
+    public Integer getStock() {
+        return stock;
     }
 
     public String getCode() {
@@ -52,26 +51,26 @@ public class Product{
     }
 
 
-    public boolean increaseQuantity(Short amount) {
+    public boolean increaseStock(Integer amount) {
         if (amount < 0) {
             return false;
         }
-        this.quantity += amount;
+        this.stock += amount;
         return true;
     }
 
-    public boolean decreaseQuantity(Short amount) {
-        if (amount < 0 || amount > this.quantity) {
+    public boolean decreaseStock(Integer amount) {
+        if (amount < 0 || amount > this.stock) {
             return false;
         }
-        this.quantity -= amount;
+        this.stock -= amount;
         return true;
     }
 
     public static class Builder {
         private Integer id;
         private String name;
-        private Integer quantity;
+        private Integer stock;
         private String code;
         private Double price;
         private String image;
@@ -86,8 +85,8 @@ public class Product{
             return this;
         }
 
-        public Builder setQuantity(Integer quantity) {
-            this.quantity = quantity;
+        public Builder setStock(Integer stock) {
+            this.stock = stock;
             return this;
         }
 
@@ -110,7 +109,7 @@ public class Product{
             Product product = new Product();
             product.id = this.id;
             product.name = this.name;
-            product.quantity = this.quantity;
+            product.stock = this.stock;
             product.code = this.code;
             product.price = this.price;
             product.image = this.image;
@@ -123,7 +122,7 @@ public class Product{
         return "Product{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", quantity=" + quantity +
+                ", quantity=" + stock +
                 ", code='" + code + '\'' +
                 ", price=" + price +
                 ", image='" + image + '\'' +
@@ -136,7 +135,7 @@ public class Product{
         if (o == null || getClass() != o.getClass()) return false;
         Product product = (Product) o;
         return id.equals(product.id) && name.equals(product.name) &&
-                quantity.equals(product.quantity) &&
+                stock.equals(product.stock) &&
                 code.equals(product.code) &&
                 price.equals(product.price) &&
                 image.equals(product.image);
@@ -144,6 +143,6 @@ public class Product{
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, quantity, code, price, image);
+        return Objects.hash(id, name, stock, code, price, image);
     }
 }
