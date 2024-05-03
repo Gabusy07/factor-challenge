@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+    --color-violet: rgb(73 35 242);
+    --color-primary: #3c71ecad;
+    --z-high-priority: 1000;
+    --z-priority: 100;
+    --z-base: 1;
+    --z-lower: 0;
+  }

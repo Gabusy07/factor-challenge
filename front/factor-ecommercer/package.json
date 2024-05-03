@@ -1,12 +1,17 @@
 {
-  "name": "factor-ecommercer",
-  "version": "0.0.0",
+  "name": "factor-ecommercer-front",
+  "version": "0.0.1",
   "scripts": {
+    "set-env": "node ./scripts/set-env",
+    "build:dev": "cross-env NODE_ENV=dev npm run set-env && ng build --configuration=development",
+    "build:prod": "cross-env NODE_ENV=prod npm run set-env && ng build --configuration=production",
+    "start:dev": "cross-env NODE_ENV=dev npm run set-env && ng serve --configuration=development",
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run start:dev",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "prettier": "prettier"
   },
   "private": true,
   "dependencies": {
@@ -18,6 +23,8 @@
     "@angular/platform-browser": "^16.1.0",
     "@angular/platform-browser-dynamic": "^16.1.0",
     "@angular/router": "^16.1.0",
+    "cross-env": "^7.0.3",
+    "dotenv": "^16.4.5",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.13.0"
@@ -33,6 +40,8 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "prettier": "3.2.5",
+    "tailwindcss": "^3.2.7",
     "typescript": "~5.1.3"
   }
 }

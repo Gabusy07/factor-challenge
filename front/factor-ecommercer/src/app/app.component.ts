@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment as env } from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,11 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'factor-ecommercer';
+
+  constructor(){
+    console.info("app-component init");
+    console.info(env.API_BASE_URL);
+    console.info(env.version);
+    console.info(env.ENV);
+  }
 }
