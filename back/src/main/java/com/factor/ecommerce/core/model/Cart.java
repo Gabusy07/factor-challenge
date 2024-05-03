@@ -4,10 +4,7 @@ import com.factor.ecommerce.core.utils.CartType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 @Entity
 @Table(name = "carts")
@@ -33,9 +30,8 @@ public class Cart{
     @Enumerated(EnumType.STRING)
     private CartType cartType;
 
-
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ProductOrder> productOrders;
+    private List<ProductOrder> productOrders = new ArrayList<>();
 
     private Cart() {};
 
@@ -66,6 +62,10 @@ public class Cart{
         return isActive;
     }
 
+    public void setProductOrders(List<ProductOrder> orders) {
+        this.productOrders = orders;
+    }
+
     private void calTotalAmount() {
         double total = 0;
         for (ProductOrder productOrder : productOrders) {
@@ -75,13 +75,14 @@ public class Cart{
     }
 
 
-
     public static class Builder {
         private Integer id;
         private double totalPrice;
         private CartType cartType;
         private Boolean isActive;
         private Arrays productOrders;
+        private LocalDateTime initialDate;
+        private LocalDateTime maxDateAvailable;
 
 
         public Cart.Builder setId(Integer id) {
@@ -104,6 +105,17 @@ public class Cart{
             return this;
         }
 
+        public Cart.Builder setInitialDate(LocalDateTime initialDate) {
+            this.initialDate = initialDate;
+            return this;
+        }
+
+        public Cart.Builder setmaxDateAvailable(LocalDateTime maxDateAvailable) {
+            this.maxDateAvailable = maxDateAvailable;
+            return this;
+        }
+
+
 
         public Cart build() {
             Cart cart = new Cart();
@@ -111,32 +123,10 @@ public class Cart{
             cart.totalPrice = this.totalPrice;
             cart.cartType = this.cartType;
             cart.isActive = this.isActive;
+            cart.initialDate = initialDate;
+            cart.maxDateAvailable = maxDateAvailable;
             return cart;
         }
     }
 
-    @Override
-    public String toString() {
-        return "Cart{" +
-                "id=" + id +
-                ", totalPrice=" + totalPrice +
-                ", chartType=" + cartType +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Cart cart = (Cart) o;
-        return Double.compare(
-                cart.totalPrice, totalPrice) == 0 &&
-                id.equals(cart.id) &&
-                cartType == cart.cartType;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, totalPrice, cartType);
-    }
 }

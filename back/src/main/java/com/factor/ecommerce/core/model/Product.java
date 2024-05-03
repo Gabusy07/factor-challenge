@@ -26,6 +26,9 @@ public class Product{
     @Column(name = "image", nullable = true, length = 300)
     private String image;
 
+    @ManyToOne
+    @JoinColumn(name = "cart_id", referencedColumnName = "id")
+    private Cart cart;
 
     private Product() {}
 
@@ -53,6 +56,9 @@ public class Product{
         return image;
     }
 
+    public String getDescription() {
+        return description;
+    }
 
     public boolean increaseStock(Integer amount) {
         if (amount < 0) {
@@ -77,6 +83,8 @@ public class Product{
         private String code;
         private Double price;
         private String image;
+
+        private String description;
 
         public Builder setId(Integer id) {
             this.id = id;
@@ -108,6 +116,11 @@ public class Product{
             return this;
         }
 
+        public Builder setDescription(String description) {
+            this.description = description;
+            return this;
+        }
+
         public Product build() {
             Product product = new Product();
             product.id = this.id;
@@ -116,6 +129,7 @@ public class Product{
             product.code = this.code;
             product.price = this.price;
             product.image = this.image;
+            product.description = this.description;
             return product;
         }
     }

@@ -9,7 +9,7 @@ public class User {
     private String username;
     private String password;
 
-    private UserType userType;
+    private UserType userType = UserType.USER_COMMON;
 
     public User() {
     }
