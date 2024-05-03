@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
 
 @Entity
 @Table(name = "carts")
@@ -43,7 +44,12 @@ public class Cart{
     }
 
     public double getTotalPrice() {
+        this.calTotalAmount();
         return totalPrice;
+    }
+
+    public void setTotalPrice(Double price) {
+        this.totalPrice = price;
     }
 
 
@@ -60,13 +66,15 @@ public class Cart{
         return isActive;
     }
 
-    public void calTotalAmount() {
+    private void calTotalAmount() {
         double total = 0;
         for (ProductOrder productOrder : productOrders) {
             total += productOrder.getProduct().getPrice();
         }
         this.totalPrice = total;
     }
+
+
 
     public static class Builder {
         private Integer id;

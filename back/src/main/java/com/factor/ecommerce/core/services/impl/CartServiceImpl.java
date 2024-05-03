@@ -37,14 +37,25 @@ public class CartServiceImpl implements CartService {
     public Optional<Cart> getCart(Integer userId) {
 
         //Optional User op = userRepository.findById(userId);
-
-        Optional<User> op = Optional.of(new User());
-        Integer cartId = op.get().getId();
-        if(cartRepository.existsById(cartId)){
-            return cartRepository.findById(cartId);
+        Optional<User> userOptional = Optional.of(new User());
+        if (userOptional.isPresent()) {
+            User user = userOptional.get();
+            Optional<Cart> cartOptional = cartRepository.findById(user.getId());
+            if (cartOptional.isPresent()) {
+                Cart oldCart = cartOptional.get();
+                Double totalPrice = applyDiscount(oldCart);
+                Cart cart = new Cart.Builder()
+                        .setId(oldCart.getId())
+                        .setIsActive(oldCart.getActive())
+                        .setTotalPrice(totalPrice)
+                        .setCartType(oldCart.getCartType())
+                        .build();
+                return Optional.of(cart);
+            }
+            CartType cartType = getCartType(user.getUserType());
+            return create(cartType);
         }
-        CartType cartType = this.getCartType(op.get().getUserType());
-        return this.create(cartType);
+        return Optional.empty();
     }
 
     private Optional<Cart> create(CartType cartType) {
@@ -69,5 +80,28 @@ public class CartServiceImpl implements CartService {
 
     private Boolean isSpecialDate() {
         return specialDateService.isASpecialDate();
+    }
+
+    private Double applyDiscount(Cart cart) {
+        Double totalAmount = cart.getTotalPrice();
+        int productCount = cart.getProducts().size();
+
+        if (productCount == 4) {
+            totalAmount *= 0.75;
+        } else if (productCount >= 10) {
+            switch (cart.getCartType()) {
+                case CART_VIP:
+                    totalAmount -= 500.0;
+                    break;
+                case CART_DATE_SPECIAL:
+                    totalAmount -= 300.0;
+                    break;
+                case CART_COMMON:
+                    totalAmount -= 100.0;
+                    break;
+            }
+            totalAmount = Math.max(totalAmount, 0.0);
+        }
+        return totalAmount;
     }
 }
