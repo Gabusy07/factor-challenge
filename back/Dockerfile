@@ -19,6 +19,7 @@ FROM openjdk:17-jdk-slim
 WORKDIR /ecommerce
 RUN mkdir ./logs
 COPY /target/ecommerce-0.0.1.jar .
+COPY src/main/resources/*.sql /docker-entrypoint-initdb.d/
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "ecommerce-0.0.1.jar"]
