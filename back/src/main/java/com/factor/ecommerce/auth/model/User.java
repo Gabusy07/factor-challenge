@@ -8,6 +8,8 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
 import java.util.List;
+import com.factor.ecommerce.auth.utils.UserType;
+
 import java.util.Objects;
 
 @Entity
@@ -31,6 +33,7 @@ public class User {
     private List<Cart> cart;
 
     private User() {}
+    private UserType userType = UserType.USER_COMMON;
 
 
     public Integer getId() {
@@ -96,4 +99,7 @@ public class User {
         }
     }
 
+    public UserType getUserType() {
+        return userType;
+    }
 }
