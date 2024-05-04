@@ -1,5 +1,6 @@
 package com.factor.ecommerce.core.model;
 
+import com.factor.ecommerce.auth.model.User;
 import com.factor.ecommerce.core.utils.CartType;
 import jakarta.persistence.*;
 
@@ -30,8 +31,14 @@ public class Cart{
     @Enumerated(EnumType.STRING)
     private CartType cartType;
 
+
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<ProductOrder> productOrders = new ArrayList<>();
+
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
+
 
     private Cart() {};
 

@@ -1,22 +1,20 @@
 package com.factor.ecommerce.core.services.impl;
 
 import com.factor.ecommerce.auth.model.User;
+import com.factor.ecommerce.auth.service.UserService;
 import com.factor.ecommerce.auth.utils.UserType;
-import com.factor.ecommerce.core.controller.request.ProductOrderRequest;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
 import com.factor.ecommerce.core.services.interfaces.SpecialDateService;
 import com.factor.ecommerce.core.utils.CartType;
-import com.factor.ecommerce.exception.CartNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 
 
@@ -26,14 +24,14 @@ public class CartServiceImpl implements CartService {
     private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
     private final CartRepository cartRepository;
+    private final UserService userService;
     private final SpecialDateService specialDateService;
 
-    private final ProductOrderService productOrderService;
 
-    public CartServiceImpl(CartRepository cartRepository, SpecialDateService specialDateService, ProductOrderService productOrderService) {
+    public CartServiceImpl(CartRepository cartRepository, UserService userService, SpecialDateService specialDateService) {
         this.cartRepository = cartRepository;
+        this.userService = userService;
         this.specialDateService = specialDateService;
-        this.productOrderService = productOrderService;
     }
 
 
@@ -50,13 +48,10 @@ public class CartServiceImpl implements CartService {
     @Override
     public Optional<Cart> getCart(Integer userId) {
 
-        //Optional User op = userRepository.findById(userId);
-        Optional<User> userOptional = Optional.of(new User());
-        //if (userOptional.isPresent()) {
-        if (true) {
-            logger.atWarn().log("ENTRA EN TRUE CREATE");
+        Optional<User> userOptional = userService.getById(userId);
+        if (userOptional.isPresent()) {
             User user = userOptional.get();
-            Optional<Cart> cartOptional = cartRepository.findById(1); // user.id
+            Optional<Cart> cartOptional = cartRepository.findById(userId);
             if (cartOptional.isPresent()) {
                 Cart oldCart = cartOptional.get();
                 Double totalPrice = applyDiscount(oldCart);

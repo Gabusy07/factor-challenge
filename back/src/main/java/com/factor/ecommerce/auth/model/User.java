@@ -21,19 +21,21 @@ public class User {
     @Max(25)
     @Min(6)
     @Email
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
-    @Max(50)
-    @Min(5)
-    @Column(name = "name", nullable = false)
+    @Column(name = "password", nullable = false)
     private String password;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Cart> cart;
+
+    @Column(name = "type")
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
+    private Cart cart;
 
     private User() {}
-    private UserType userType = UserType.USER_COMMON;
 
 
     public Integer getId() {
@@ -60,11 +62,14 @@ public class User {
         this.password = password;
     }
 
+
+
     public static class Builder {
         private Integer id;
         private String username;
         private String password;
-        private List<Cart> cart;
+        private Cart cart;
+        private UserType userType;
 
         public Builder() {}
 
@@ -83,18 +88,23 @@ public class User {
             return this;
         }
 
-        public Builder cart(List<Cart> cart) {
+        public Builder cart(Cart cart) {
             this.cart = cart;
             return this;
         }
 
-        // Método para construir el objeto User
+        public Builder userType(UserType userType) {
+            this.userType = userType;
+            return this;
+        }
+
         public User build() {
             User user = new User();
             user.id = this.id;
             user.username = this.username;
             user.password = this.password;
             user.cart = this.cart;
+            user.userType = this.userType;
             return user;
         }
     }
