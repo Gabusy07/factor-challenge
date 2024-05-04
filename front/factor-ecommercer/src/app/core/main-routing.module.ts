@@ -12,14 +12,13 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'order-details', component: OrderDetailsComponent },
+    
     ]
   }
-  
-  
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule {}
+export class MainRoutingModule {}

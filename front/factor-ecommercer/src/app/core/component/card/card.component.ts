@@ -18,6 +18,7 @@ export class CardComponent {
   }
 
   buyProduct(): void {
-      this.router.navigate(["/order-details"]);
+    console.info('quiere navegar')
+      this.router.navigate(['order-details'] );
     }
 }

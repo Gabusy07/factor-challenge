@@ -6,10 +6,8 @@ import { CardComponent } from './component/card/card.component';
 import { OrderDetailsComponent } from './pages/order-details/order-details.component';
 import { ButtonComponent } from '../shared/button/button.component';
 import { InputComponent } from '../shared/input/input.component';
-import { BrowserModule } from '@angular/platform-browser';
-import { AppRoutingModule } from '../app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
-import { RouterModule } from '@angular/router';
+import { MainRoutingModule } from './main-routing.module';
+import { CommonModule } from '@angular/common';
 
 
 
@@ -23,9 +21,10 @@ import { RouterModule } from '@angular/router';
 
   ],
   imports: [
-    RouterModule.forChild([]),
+    CommonModule,
     ButtonComponent,
-    InputComponent
+    InputComponent,
+    MainRoutingModule
   ]
 })
 export class MainModule { }

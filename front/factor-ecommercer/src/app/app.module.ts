@@ -5,7 +5,7 @@ import { ErrorPageComponent } from './pages/error-page/error-page.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { MainModule } from './core/main.module';
-import { MainLayoutComponent } from './core/main-layout/main-layout.component';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule({
@@ -18,6 +18,7 @@ import { MainLayoutComponent } from './core/main-layout/main-layout.component';
     AppRoutingModule,
     HttpClientModule,
     MainModule,
+    RouterModule
   ],
   providers: [],
   bootstrap: [AppComponent]
