@@ -18,6 +18,6 @@ export class CardComponent {
   }
 
   buyProduct(): void {
-      this.router.navigate(["/order-details"]);
+      this.router.navigate(['order-details'] );
     }
 }

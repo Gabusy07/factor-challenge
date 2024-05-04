@@ -20,14 +20,14 @@
   
   }
   
-  .light {
-    background: #dce1f0;
-    color: #010510;
+  .blue {
+    background: #2f57cd;
+    color: #d5dae6;
     &:hover {
-      background: darken(#dce1f0, 10%);
+      background: lighten(#2f57cd, 5%);
     }
     &:disabled {
-      background: #d1d5db;
+      background: lighten(#2f57cd, 40%);
       color: #0c0101;
       cursor: no-drop;
     }
