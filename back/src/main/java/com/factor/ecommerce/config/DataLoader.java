@@ -15,7 +15,7 @@ import java.util.List;
 public class DataLoader implements ApplicationRunner {
     private final UserService userService;
    // @Value("${dataloader:false}")
-    private boolean isDataAutoLoaded = true;
+    private boolean isDataAutoLoaded = false;
 
     private List<Product> product;
 
