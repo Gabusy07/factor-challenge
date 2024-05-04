@@ -1,1 +1,33 @@
-<p>login works!</p>
+
+<div class="bg-gray-100 shadow-md rounded px-10 py-5 pt-6 pb-8 mb-4">
+    <h5 class="text-xl font-bold mb-4">Iniciar Sesión</h5>
+  
+    <form [formGroup]="form" (ngSubmit)="send()" class="mb-4">
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="email">Email:</label>
+        <input name="email" [ngClass]="{'border-red-500' : Email?.errors && Email?.touched, 'border-green-500' : !Email?.errors && Email?.touched}"  class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500" type="email" required formControlName="email" />
+        <div *ngIf="Email?.errors && Email?.touched" class="mt-2">
+          <small *ngIf="Email?.hasError('required')" class="text-red-500 w-full border border-red-500">El campo email no debe estar vacío</small>
+          <small *ngIf="Email?.hasError('email')" class="text-red-500 w-full border border-red-500">El email ingresado no es válido</small>
+        </div>
+      </div>
+  
+      <div class="mb-4">
+        <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Contraseña:</label>
+        <input name="password" [ngClass]="{'border-red-500' : Password?.errors && Password?.touched, 'border-green-500' : !Password?.errors && Password?.touched}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500" type="password" formControlName="password" />
+        <div *ngIf="Password?.errors && Password?.touched" class="mt-2">
+          <small *ngIf="Password?.hasError('required')" class="text-red-500 w-full border border-red-500">El campo contraseña no debe estar vacío</small>
+          <small *ngIf="Password?.errors?.['minlength']" class="text-red-500">El campo contraseña debe ser más larga</small>
+          <small *ngIf="Password?.errors?.['maxlength']" class="text-red-500">El campo contraseña debe ser más corta</small>
+        </div>
+      </div>
+  
+      <div class="text-center">
+        <app-button  type="submit" [width]="'100%'" [color]="'blue'" [disabled]="!form.valid" [label]="'Ingresar'"></app-button>
+      </div>
+    </form>
+  
+    <p class="text-center text-sm">
+      No estás registrado? <span>Ingresa <a (click)="navigateToRegiste()" class="text-blue-500">aquí</a></span>
+    </p>
+  </div>

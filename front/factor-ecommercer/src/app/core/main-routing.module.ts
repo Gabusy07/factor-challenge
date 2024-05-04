@@ -12,6 +12,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'order-details', component: OrderDetailsComponent },
+      // aqui iria component para registro
     
     ]
   }
