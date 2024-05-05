@@ -18,7 +18,7 @@ public class Product{
     @Column(name = "description", nullable = false)
     private String description;
     @Column(name = "stock", nullable = false)
-    private Integer stock = 0;
+    private Integer stock;
     @Column(name = "code", nullable = true, length = 25)
     private String code;
     @Column(name = "price", nullable = true)
@@ -26,9 +26,6 @@ public class Product{
     @Column(name = "image", nullable = true, length = 300)
     private String image;
 
-    @ManyToOne
-    @JoinColumn(name = "cart_id", referencedColumnName = "id")
-    private Cart cart;
 
     private Product() {}
 

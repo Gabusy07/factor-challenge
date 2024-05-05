@@ -2,6 +2,12 @@ FROM openjdk:17-jdk-slim as builder
 
 WORKDIR /app
 
+ENV DB_HOST postgres_db
+ENV DB_PORT 5432
+ENV NAME postgres
+ENV DB_USERNAME postgres
+ENV DB_PASSWORD postgres
+
 COPY .mvn/ .mvn
 COPY mvnw  ./
 COPY pom.xml ./
