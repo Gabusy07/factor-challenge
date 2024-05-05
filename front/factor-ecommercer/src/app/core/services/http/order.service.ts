@@ -5,7 +5,7 @@ import { environment as env } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class OrderService {
+export class OrderHttpService {
 
   private BASE_URL = env.API_BASE_URL;
 

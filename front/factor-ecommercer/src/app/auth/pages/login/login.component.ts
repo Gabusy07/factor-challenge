@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
@@ -14,8 +15,10 @@ throw new Error('Method not implemented.');
 
 public form:FormGroup;
 
-constructor(private readonly formBuilder : FormBuilder,
-   private readonly route: Router
+constructor(
+  private readonly formBuilder : FormBuilder,
+   private readonly route: Router,
+   private readonly loginService: LoginService
   ) {
 
   this.form = this.initForm();
@@ -24,14 +27,14 @@ constructor(private readonly formBuilder : FormBuilder,
 
   private initForm(): FormGroup{
     return this.formBuilder.group({
-      email: ['',[Validators.required, Validators.email]],
+      username: ['',[Validators.required, Validators.email]],
       password: ['',[Validators.required, Validators.minLength(5), Validators.maxLength(18)]],
     })
 
   }
 
-  get Email(){
-    return this.form.get('email');
+  get Username(){
+    return this.form.get('username');
   }
 
   get Password(){
@@ -39,6 +42,19 @@ constructor(private readonly formBuilder : FormBuilder,
   }
 
   send() {
-    this.route.navigate(['']);
+    this.loginService.login(this.form.value).subscribe({
+      next: data => {
+        console.log('Inicio de sesión exitoso');
+        this.route.navigate(['']);
+        
+      },
+      error : (error) => {
+        console.error('Error al iniciar sesión:', error.error);
+      }
+
+    }
+
+     
+    );
     }
 }

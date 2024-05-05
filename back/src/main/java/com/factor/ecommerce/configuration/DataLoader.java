@@ -1,10 +1,9 @@
-package com.factor.ecommerce.config;
+package com.factor.ecommerce.configuration;
 
 import com.factor.ecommerce.auth.model.User;
 import com.factor.ecommerce.auth.service.UserService;
 import com.factor.ecommerce.auth.utils.UserType;
 import com.factor.ecommerce.core.model.Product;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;

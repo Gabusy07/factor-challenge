@@ -1,4 +1,4 @@
-package com.factor.ecommerce.config;
+package com.factor.ecommerce.configuration;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Components;
