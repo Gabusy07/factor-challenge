@@ -53,7 +53,12 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public User update(User user) {
+        return userRepository.save(user);
+    }
+
+    @Override
     public Optional<User> getById(Integer id) {
-        return Optional.empty();
+        return userRepository.findById(id);
     }
 }

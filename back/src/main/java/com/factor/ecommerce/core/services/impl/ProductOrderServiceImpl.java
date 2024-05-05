@@ -1,6 +1,7 @@
 package com.factor.ecommerce.core.services.impl;
 
-import com.factor.ecommerce.core.model.Cart;
+import com.factor.ecommerce.core.dto.CartDTO;
+import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.controller.request.ProductOrderRequest;
 import com.factor.ecommerce.core.model.Product;
 import com.factor.ecommerce.core.model.ProductOrder;
@@ -24,25 +25,27 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private final CartService cartService;
 
     private final ProductService productService;
+    private final CartMapper cartMapper;
 
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository,
                                    CartService cartService,
-                                   ProductService productService) {
+                                   ProductService productService, CartMapper cartMapper) {
         this.productOrderRepository = productOrderRepository;
         this.cartService = cartService;
         this.productService = productService;
+        this.cartMapper = cartMapper;
     }
 
 
     @Transactional
     @Override
     public Optional<ProductOrder> createOrder(ProductOrderRequest request) {
-        Optional<Cart> c_op = cartService.getCart(request.getCartId());
+        Optional<CartDTO> c_op = cartService.getCart(request.getCartId());
         Optional<Product> p_op = productService.getProduct(request.getProductId());
         if ( c_op.isPresent() && p_op.isPresent()){
             ProductOrder item = new ProductOrder.Builder().quantityOrder(
                             request.getQuantityOrder())
-                    .cart(c_op.get())
+                    .cart(cartMapper.cartDTOtoCart(c_op.get()))
                     .product(p_op.get())
                     .build();
             return Optional.of(productOrderRepository.save(item));

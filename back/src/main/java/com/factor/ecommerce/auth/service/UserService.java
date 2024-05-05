@@ -9,5 +9,7 @@ public interface UserService {
     String login(User user) throws RuntimeException;
     User createUser(User user);
 
+    User update(User user);
+
     Optional<User> getById(Integer id);
 }

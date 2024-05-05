@@ -62,7 +62,12 @@ public class User {
         this.password = password;
     }
 
+    public Cart getCart() {
+        return cart;
+    }
 
+    public void setCart(Cart cart) {
+    }
 
     public static class Builder {
         private Integer id;
@@ -87,6 +92,11 @@ public class User {
             this.password = password;
             return this;
         }
+
+        public void setId(Integer id) {
+            this.id = id;
+        }
+
 
         public Builder cart(Cart cart) {
             this.cart = cart;

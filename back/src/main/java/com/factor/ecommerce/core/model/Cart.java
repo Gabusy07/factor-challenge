@@ -1,7 +1,6 @@
 package com.factor.ecommerce.core.model;
 
 import com.factor.ecommerce.auth.model.User;
-import com.factor.ecommerce.core.utils.CartType;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -27,9 +26,6 @@ public class Cart{
     @Column(name = "max_date_available", nullable = false)
     private LocalDateTime maxDateAvailable;
 
-    @Column(name = "type")
-    @Enumerated(EnumType.STRING)
-    private CartType cartType;
 
 
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -60,9 +56,7 @@ public class Cart{
         return productOrders;
     }
 
-    public CartType getCartType() {
-        return cartType;
-    }
+
 
 
     public Boolean getActive() {
@@ -81,57 +75,69 @@ public class Cart{
         this.totalPrice = total;
     }
 
+    public LocalDateTime getInitialDate() {
+        return initialDate;
+    }
+
+    public LocalDateTime getMaxDateAvailable() {
+        return maxDateAvailable;
+    }
+
+    public List<ProductOrder> getProductOrders() {
+        return productOrders;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setActive(Boolean active) {
+        isActive = active;
+    }
 
     public static class Builder {
-        private Integer id;
-        private double totalPrice;
-        private CartType cartType;
-        private Boolean isActive;
-        private Arrays productOrders;
-        private LocalDateTime initialDate;
-        private LocalDateTime maxDateAvailable;
+        private Cart cart;
 
+        public Builder() {
+            cart = new Cart();
+        }
 
-        public Cart.Builder setId(Integer id) {
-            this.id = id;
+        public Builder id(Integer id) {
+            cart.id = id;
             return this;
         }
 
-        public Cart.Builder setTotalPrice(Double totalPrice) {
-            this.totalPrice = totalPrice;
+        public Builder totalPrice(double totalPrice) {
+            cart.totalPrice = totalPrice;
             return this;
         }
 
-        public Cart.Builder setCartType(CartType cartType) {
-            this.cartType = cartType;
+        public Builder isActive(Boolean isActive) {
+            cart.isActive = isActive;
             return this;
         }
 
-        public Cart.Builder setIsActive(Boolean isActive) {
-            this.isActive = isActive;
+        public Builder initialDate(LocalDateTime initialDate) {
+            cart.initialDate = initialDate;
             return this;
         }
 
-        public Cart.Builder setInitialDate(LocalDateTime initialDate) {
-            this.initialDate = initialDate;
+        public Builder maxDateAvailable(LocalDateTime maxDateAvailable) {
+            cart.maxDateAvailable = maxDateAvailable;
             return this;
         }
 
-        public Cart.Builder setmaxDateAvailable(LocalDateTime maxDateAvailable) {
-            this.maxDateAvailable = maxDateAvailable;
+        public Builder productOrders(List<ProductOrder> productOrders) {
+            cart.productOrders = productOrders;
             return this;
         }
 
-
+        public Builder user(User user) {
+            cart.user = user;
+            return this;
+        }
 
         public Cart build() {
-            Cart cart = new Cart();
-            cart.id = this.id;
-            cart.totalPrice = this.totalPrice;
-            cart.cartType = this.cartType;
-            cart.isActive = this.isActive;
-            cart.initialDate = initialDate;
-            cart.maxDateAvailable = maxDateAvailable;
             return cart;
         }
     }
