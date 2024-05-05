@@ -1,16 +1,15 @@
 package com.factor.ecommerce.auth.model;
 
 import com.factor.ecommerce.core.model.Cart;
-import com.factor.ecommerce.core.model.ProductOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 
-import java.util.List;
 import com.factor.ecommerce.auth.utils.UserType;
 
-import java.util.Objects;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -32,8 +31,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private UserType userType;
 
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private Cart cart;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<Cart> carts = new HashSet<>();
 
     private User() {}
 
@@ -62,18 +61,19 @@ public class User {
         this.password = password;
     }
 
-    public Cart getCart() {
-        return cart;
+    public Set<Cart> getCarts() {
+        return carts;
     }
 
-    public void setCart(Cart cart) {
+    public void setCarts(Set<Cart> carts) {
+        this.carts = carts;
     }
 
     public static class Builder {
         private Integer id;
         private String username;
         private String password;
-        private Cart cart;
+        private Set<Cart> carts;
         private UserType userType;
 
         public Builder() {}
@@ -98,8 +98,8 @@ public class User {
         }
 
 
-        public Builder cart(Cart cart) {
-            this.cart = cart;
+        public Builder cart(Set<Cart> cart) {
+            this.carts = cart;
             return this;
         }
 
@@ -113,7 +113,7 @@ public class User {
             user.id = this.id;
             user.username = this.username;
             user.password = this.password;
-            user.cart = this.cart;
+            user.carts = this.carts;
             user.userType = this.userType;
             return user;
         }

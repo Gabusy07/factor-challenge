@@ -24,7 +24,6 @@ public interface CartMapper {
                 .totalPrice(cartDTO.getTotalPrice())
                 .isActive(cartDTO.getActive())
                 .initialDate(cartDTO.getInitialDate())
-                .maxDateAvailable(cartDTO.getMaxDateAvailable())
                 .productOrders(cartDTO.getProductOrders())
                 .build();
     }

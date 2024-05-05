@@ -5,6 +5,7 @@ import com.factor.ecommerce.auth.service.UserService;
 import com.factor.ecommerce.core.dto.CartDTO;
 import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.model.Cart;
+import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 
 
@@ -40,18 +42,52 @@ public class CartServiceImpl implements CartService {
 
 
     @Override
-    public CartDTO update(CartDTO cartDto) {
-        Cart existingCart = cartRepository.findById(cartDto.getId()).orElseThrow(
+    public CartDTO update(CartDTO cartDto,Integer userId) {
+        Optional<User> userOptional = userService.getById(userId);
+        if (userOptional.isEmpty()) {
+            logger.error("User not found");
+            return null;
+        }
+        Cart oldCart = cartRepository.findById(cartDto.getId()).orElseThrow(
                 () -> new EntityNotFoundException("Cart " + cartDto.getId() + " not found")
         );
-        return cartMapper.cartToCartDTO(existingCart);
+
+        if (isCartExpired(oldCart)) {
+            oldCart.setActive(false);
+            return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
+        }
+        User user = userOptional.get();
+        Double totalPrice = calculateTotalPrice(oldCart, user);
+        Cart cartUpdated = updateCartProducts(oldCart, totalPrice, cartDto.getProductOrders());
+        return cartMapper.cartToCartDTO(cartUpdated);
     }
 
-    @Override
-    public void delete(Integer id) {
-
+    private Cart updateCartProducts(Cart oldCart, Double totalPrice, List<ProductOrder> productOrder) {
+        return new Cart.Builder()
+                .id(oldCart.getId())
+                .isActive(oldCart.getActive())
+                .totalPrice(totalPrice)
+                .user(oldCart.getUser())
+                .maxDateAvailable(oldCart.getMaxDateAvailable())
+                .productOrders(productOrder) // unico campo alterado
+                .initialDate(oldCart.getInitialDate())
+                .build();
     }
 
+
+    private Cart updateCart(Cart oldCart, Double totalPrice) {
+        return new Cart.Builder()
+                .id(oldCart.getId())
+                .isActive(oldCart.getActive())
+                .totalPrice(totalPrice)
+                .user(oldCart.getUser())
+                .maxDateAvailable(oldCart.getMaxDateAvailable())
+                .productOrders(oldCart.getProductOrders())
+                .initialDate(oldCart.getInitialDate())
+                .build();
+    }
+
+    /*
     @Transactional
     @Override
     public Optional<CartDTO> getCart(Integer userId) {
@@ -60,7 +96,12 @@ public class CartServiceImpl implements CartService {
         if (userOptional.isPresent()) {
             User user = userOptional.get();
             Cart oldCart = user.getCart();
-            if (oldCart != null) {
+            Boolean isExpired = oldCart.getMaxDateAvailable().isBefore(LocalDateTime.now());
+            if (oldCart != null && !isExpired) {
+                if(isExpired){
+                    oldCart.setActive(false);
+                    return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
+                }
                 Double totalPrice = this.discountService.applyDiscount(oldCart, user); // aplico descuento segun el tipo y dia
                 Cart cart = new Cart.Builder()
                         .id(oldCart.getId())
@@ -78,6 +119,47 @@ public class CartServiceImpl implements CartService {
         }
         logger.error("User not found");
         return Optional.empty();
+    }*/
+
+    @Transactional
+    @Override
+    public Optional<CartDTO> getCart(Integer userId) {
+        Optional<User> userOptional = userService.getById(userId);
+        if (userOptional.isEmpty()) {
+            logger.error("User not found");
+            return Optional.empty();
+        }
+
+        User user = userOptional.get();
+        Optional<Cart> activeCartOptional = user.getCarts().stream()
+                .filter(Cart::getActive)
+                .findFirst();
+
+        if (activeCartOptional.isEmpty()) {
+            return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
+        }
+        Cart oldCart = activeCartOptional.get();
+
+        if (isCartExpired(oldCart)) {
+            oldCart.setActive(false);
+            cartRepository.save(oldCart);
+            return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
+        }
+
+        Double totalPrice = calculateTotalPrice(oldCart, user);
+
+        Cart updatedCart = updateCart(oldCart, totalPrice);
+        CartDTO cartDTO = cartMapper.cartToCartDTO(updatedCart);
+
+        return Optional.of(cartDTO);
+    }
+
+    private boolean isCartExpired(Cart cart) {
+        return cart.getMaxDateAvailable().isBefore(LocalDateTime.now());
+    }
+
+    private Double calculateTotalPrice(Cart cart, User user) {
+        return discountService.applyDiscount(cart, user);
     }
 
     @Override
@@ -97,11 +179,11 @@ public class CartServiceImpl implements CartService {
                 .isActive(true)
                 .totalPrice(0.0)
                 .initialDate(date)
-                .maxDateAvailable(date.plusHours(24))
-                .user(user)
+                .maxDateAvailable(date.plusMinutes(1))
+                //.user(user)
                 .build();
-        user.setCart(cart);
-        userService.update(user);
+        user.getCarts().add(cart);
+        //userService.update(user);
         return cartRepository.save(cart);
     }
 

@@ -30,11 +30,11 @@ public class CartController {
         return ResponseEntity.status(HttpStatus.OK).body(op.get());
       }
 
-    @PatchMapping("update")
-    public ResponseEntity<?> updateCart(@RequestBody CartDTO cartDTO) {
+    @PatchMapping("update/{userId}")
+    public ResponseEntity<?> updateCart(@PathVariable Integer userId, @RequestBody CartDTO cartDTO) {
 
         try {
-            CartDTO response = cartService.update(cartDTO);
+            CartDTO response = cartService.update(cartDTO, userId);
             return ResponseEntity.status(HttpStatus.OK).body(response);
 
         }catch (EntityNotFoundException e){

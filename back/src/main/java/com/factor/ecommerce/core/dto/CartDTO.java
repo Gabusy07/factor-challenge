@@ -13,7 +13,6 @@ public class CartDTO {
     private Double totalPrice;
     private Boolean isActive;
     private LocalDateTime initialDate;
-    private LocalDateTime maxDateAvailable;
 
     private List<ProductOrder> productOrders = new ArrayList<>();
 
@@ -49,13 +48,7 @@ public class CartDTO {
         this.initialDate = initialDate;
     }
 
-    public LocalDateTime getMaxDateAvailable() {
-        return maxDateAvailable;
-    }
 
-    public void setMaxDateAvailable(LocalDateTime maxDateAvailable) {
-        this.maxDateAvailable = maxDateAvailable;
-    }
 
     public List<ProductOrder> getProductOrders() {
         return productOrders;
@@ -72,7 +65,6 @@ public class CartDTO {
                 ", totalPrice=" + totalPrice +
                 ", isActive=" + isActive +
                 ", initialDate=" + initialDate +
-                ", maxDateAvailable=" + maxDateAvailable +
                 ", productOrders=" + productOrders +
                 '}';
     }
@@ -82,11 +74,14 @@ public class CartDTO {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CartDTO cartDTO = (CartDTO) o;
-        return id.equals(cartDTO.id) && Objects.equals(totalPrice, cartDTO.totalPrice) && Objects.equals(isActive, cartDTO.isActive) && Objects.equals(initialDate, cartDTO.initialDate) && Objects.equals(maxDateAvailable, cartDTO.maxDateAvailable) && Objects.equals(productOrders, cartDTO.productOrders);
+        return id.equals(cartDTO.id) && Objects.equals(totalPrice, cartDTO.totalPrice)
+                && Objects.equals(isActive, cartDTO.isActive)
+                && Objects.equals(initialDate, cartDTO.initialDate)
+                && Objects.equals(productOrders, cartDTO.productOrders);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, totalPrice, isActive, initialDate, maxDateAvailable, productOrders);
+        return Objects.hash(id, totalPrice, isActive, initialDate, productOrders);
     }
 }
