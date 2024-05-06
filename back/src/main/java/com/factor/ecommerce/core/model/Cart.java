@@ -68,16 +68,29 @@ public class Cart{
         this.productOrders = orders;
     }
 
-    private void calTotalAmount() {
-        double total = 0;
-        for (ProductOrder productOrder : productOrders) {
-            total += productOrder.getProduct().getPrice();
+    private double calTotalAmount() {
+        double totalPrice = 0.0;
+        if (productOrders != null) {
+            for (ProductOrder order : productOrders) {
+                totalPrice += order.getQuantityOrder() * order.getProduct().getPrice();
+            }
         }
-        this.totalPrice = total;
+        return totalPrice;
     }
+
 
     public LocalDateTime getInitialDate() {
         return initialDate;
+    }
+
+    public Integer getTotalQuantity() {
+        int totalQuantity = 0;
+        if (productOrders != null) {
+            for (ProductOrder order : productOrders) {
+                totalQuantity += order.getQuantityOrder();
+            }
+        }
+        return totalQuantity;
     }
 
     public LocalDateTime getMaxDateAvailable() {

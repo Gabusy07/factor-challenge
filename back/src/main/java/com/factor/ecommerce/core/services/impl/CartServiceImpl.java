@@ -62,21 +62,25 @@ public class CartServiceImpl implements CartService {
 
         if (isCartExpired(oldCart)) {
             oldCart.setActive(false);
+            logger.info("Cart was expirated");
             return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
         }
 
+        System.out.println("LLEGA A LA PARTE DE GUARDAR LISTA DE ORDENES");
         List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
+        Cart cartUpdated = updateCartProducts(
+                oldCart,
+                productOrders);
+        Cart cartSaved = cartRepository.save(cartUpdated);
 
         User user = userOptional.get();
 
-        Cart cartUpdated = updateCartProducts(
-                oldCart,
-                oldCart.getTotalPrice(),
-                productOrders);
-       // Double totalPrice = calculateTotalPrice(cartUpdated, user);
-        //cartUpdated.setTotalPrice(totalPrice);
-        //cartRepository.save(cartUpdated);
-        return cartMapper.cartToCartDTO(cartUpdated);
+        Double totalPrice = calculateTotalPrice(cartUpdated, user);
+        System.out.println(totalPrice);
+        cartUpdated.setTotalPrice(totalPrice);
+        System.out.println("LLEGA A LA PARTE DE GUARDAR");
+
+        return cartMapper.cartToCartDTO(cartSaved);
     }
 
     private List<ProductOrder> saveAllProductOrders(CartDTO cartDTO) {
@@ -85,12 +89,12 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    private Cart updateCartProducts(Cart oldCart,Double totalPrice, List<ProductOrder> productOrder) {
+    private Cart updateCartProducts(Cart oldCart, List<ProductOrder> productOrder) {
         return new Cart.Builder()
                 .id(oldCart.getId())
                 .isActive(oldCart.getActive())
                 .user(oldCart.getUser())
-                .totalPrice(totalPrice)
+                .totalPrice(oldCart.getTotalPrice())
                 .maxDateAvailable(oldCart.getMaxDateAvailable())
                 .productOrders(productOrder) // unico campo alterado
                 .initialDate(oldCart.getInitialDate())

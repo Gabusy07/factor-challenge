@@ -28,7 +28,7 @@ public class DiscountServiceImpl implements DiscountService {
     @Override
     public Double applyDiscount(Cart cart, User user) {
         Double totalAmount = cart.getTotalPrice();
-        int productCount = cart.getProducts().size();
+        int productCount = cart.getTotalQuantity();
 
         if(productCount >= 10){
             switch (user.getUserType()) {
