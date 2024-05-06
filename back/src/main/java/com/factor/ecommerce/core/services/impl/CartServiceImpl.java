@@ -56,6 +56,7 @@ public class CartServiceImpl implements CartService {
             logger.error("User not found");
             return null;
         }
+        List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
         Cart oldCart = cartRepository.findActiveByUserId(userId).orElseThrow(
                 () -> new EntityNotFoundException("Cart " + cartDto.getId() + " not found")
         );
@@ -66,20 +67,19 @@ public class CartServiceImpl implements CartService {
             return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
         }
 
-        System.out.println("LLEGA A LA PARTE DE GUARDAR LISTA DE ORDENES");
-        List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
-        Cart cartUpdated = updateCartProducts(
-                oldCart,
-                productOrders);
-        Cart cartSaved = cartRepository.save(cartUpdated);
+
 
         User user = userOptional.get();
 
-        Double totalPrice = calculateTotalPrice(cartUpdated, user);
-        System.out.println(totalPrice);
-        cartUpdated.setTotalPrice(totalPrice);
-        System.out.println("LLEGA A LA PARTE DE GUARDAR");
+        Cart cartUpdated = updateCartProducts(
+                oldCart,
+                productOrders);
 
+        Double totalPrice = calculateTotalPrice(cartUpdated, user);
+
+        cartUpdated.setTotalPrice(totalPrice);
+        System.out.println(totalPrice);
+        Cart cartSaved = cartRepository.save(cartUpdated);
         return cartMapper.cartToCartDTO(cartSaved);
     }
 

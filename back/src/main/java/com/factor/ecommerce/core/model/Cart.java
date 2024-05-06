@@ -44,7 +44,7 @@ public class Cart{
     }
 
     public double getTotalPrice() {
-        this.calTotalAmount();
+        this.totalPrice = this.calTotalAmount();
         return totalPrice;
     }
 
@@ -69,6 +69,7 @@ public class Cart{
     }
 
     private double calTotalAmount() {
+        System.out.println("METODO ACTUALIZADO");
         double totalPrice = 0.0;
         if (productOrders != null) {
             for (ProductOrder order : productOrders) {
@@ -76,6 +77,35 @@ public class Cart{
             }
         }
         return totalPrice;
+    }
+
+    public double calculateTotalCheapestProductPrice() {
+        if (productOrders == null || productOrders.isEmpty()) {
+            return 0.0;
+        }
+
+        double cheapestPrice = Double.MAX_VALUE;
+        Product cheapestProduct = null;
+        for (ProductOrder order : productOrders) {
+            double price = order.getProduct().getPrice();
+            if (price < cheapestPrice) {
+                cheapestPrice = price;
+                cheapestProduct = order.getProduct();
+            }
+        }
+        if (cheapestProduct == null) {
+            return 0.0;
+        }
+
+        double total = 0.0;
+        for (ProductOrder order : productOrders) {
+            if (order.getProduct().equals(cheapestProduct)) {
+                total += cheapestPrice * order.getQuantityOrder();
+                break; // Solo necesitamos calcular el total de una orden
+            }
+        }
+
+        return total;
     }
 
 

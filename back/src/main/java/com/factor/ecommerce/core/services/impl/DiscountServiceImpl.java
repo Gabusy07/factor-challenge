@@ -33,8 +33,9 @@ public class DiscountServiceImpl implements DiscountService {
         if(productCount >= 10){
             switch (user.getUserType()) {
                 case USER_VIP:
-                    //TODO bonificar el producto mas barato
-                    totalAmount -= VIP_USER_DISCOUNT;
+                    double cheaperValueAmountValue = cart.calculateTotalCheapestProductPrice();
+                    double bonusCheaperProduct = cheaperValueAmountValue * 0.5; // se bonifica el producto mas barato para aplicar ese descuento
+                    totalAmount = totalAmount - VIP_USER_DISCOUNT - bonusCheaperProduct;
                     break;
                 case USER_COMMON:
                     totalAmount -= COMMON_USER_DISCOUNT;
