@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
+import { TokenResponse } from '../interfaces/Token';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,6 @@ export class LoginService {
    }
 
    login(data: any): Observable<any> {
-    console.log(data)
     const URL = `${this.URL}login`;
     const loginDto = this.getLoginDto(data);
     this.localStorageService.set('username', data.username);
@@ -25,8 +25,9 @@ export class LoginService {
     };
     
     return this.httpClient.post<any>(URL, loginDto, options).pipe(
-      tap((result: string) => {
-        this.localStorageService.set('sessionToken', result);
+      tap((result: TokenResponse) => {
+        this.localStorageService.set('sessionToken', result.token);
+        this.localStorageService.set('id', result.id);
         if (!result) {
           throw new Error('Credentials are invalid');
         }
