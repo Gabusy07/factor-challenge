@@ -1,20 +1,9 @@
 # Ecommerce challenge
 > . funcionalidades implementadas...
 
-> Live demo [_here_](/).
-> Backend Demo [_here_](/swagger-ui/index.html#).
+> Live demo [_here_](/). # no implementado
+> Backend Demo [_here_](/swagger-ui/index.html#). #no implementado
 
-## Table of Contents
-* [General Info](#general-information)
-* [Our Team](#our-team)
-* [Technologies Used](#technologies-used)
-* [Features](#features)
-* [Setup](#setup)
-* [Usage](#usage)
-  * [Backend (Swagger)](#backend-swagger)
-  * [Frontend](#frontend-1)
-* [Project Status](#project-status)
-* [Room for Improvement](#room-for-improvement)
 
 ## General Information
 datos proyecto
