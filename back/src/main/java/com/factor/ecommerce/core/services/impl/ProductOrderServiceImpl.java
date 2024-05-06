@@ -26,7 +26,7 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private static final Logger logger = LoggerFactory.getLogger(ProductOrderService.class);
     private final ProductOrderRepository productOrderRepository;
-    private final CartService cartService;
+
 
     private final ProductService productService;
     private final CartMapper cartMapper;
@@ -34,11 +34,10 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     private final ProductOrderMapper productOrderMapper;
 
-    public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository,
-                                   CartService cartService,
+    public ProductOrderServiceImpl(
+            ProductOrderRepository productOrderRepository,
                                    ProductService productService, CartMapper cartMapper, CartRepository cartRepository, ProductOrderMapper productOrderMapper) {
         this.productOrderRepository = productOrderRepository;
-        this.cartService = cartService;
         this.productService = productService;
         this.cartMapper = cartMapper;
         this.cartRepository = cartRepository;
@@ -78,15 +77,15 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     }
 
     @Override
-    public Optional<ProductOrder> update(Integer id, ProductOrderRequest request) {
+    public ProductOrder update(Integer id, ProductOrder order) {
         Optional<ProductOrder> op = productOrderRepository.findById(id);
         if(op.isPresent()){
             ProductOrder existingProduct = op.get();
-                existingProduct.setQuantityOrder(request.getQuantityOrder());
+                existingProduct.setQuantityOrder(order.getQuantityOrder());
 
-            return Optional.of(productOrderRepository.save(existingProduct));
+            return productOrderRepository.save(existingProduct);
         }
-        return Optional.empty();
+        return null;
 
     }
 
