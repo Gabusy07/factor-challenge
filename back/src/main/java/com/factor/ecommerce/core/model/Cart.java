@@ -28,7 +28,6 @@ public class Cart{
     private LocalDateTime maxDateAvailable;
 
 
-
     @JsonIgnore
     @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductOrder> productOrders = new ArrayList<>();

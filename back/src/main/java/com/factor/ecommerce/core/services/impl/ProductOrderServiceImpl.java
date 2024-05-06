@@ -54,14 +54,14 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         if ( c_op.isPresent() && p_op.isPresent()){
             ProductOrder item = new ProductOrder.Builder().quantityOrder(
                             request.getQuantityOrder())
-                    //.cart(c_op.get())
+                    .cart(c_op.get())
                     .product(p_op.get())
                     .build();
 
             ProductOrder po = productOrderRepository.save(item);
-            Cart cart = c_op.get();
-            cart.getProducts().add(po);
-            cartRepository.save(cart);
+            //Cart cart = c_op.get();
+            //cart.getProducts().add(po);
+            //cartRepository.save(cart);
             return Optional.of(productOrderRepository.save(item));
         }
         return Optional.empty();
