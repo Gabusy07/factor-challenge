@@ -10,8 +10,8 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() label = 'Button';
-  @Input() disabled = false;
-  @Input() loading = true;
+  @Input() disabled: Boolean = false;
+  @Input() loading: Boolean = true;
   @Input() color = 'dark';
   @Input() width = 'auto';
   @Input() height = '38px';

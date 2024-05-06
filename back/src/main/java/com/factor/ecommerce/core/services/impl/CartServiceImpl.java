@@ -157,9 +157,9 @@ public class CartServiceImpl implements CartService {
     }
 
     @Override
-    public Boolean executePurchase(Integer id) {
-        Cart existingCart = cartRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Cart " + id + " not found")
+    public Boolean executePurchase(CartDTO cartDTO) {
+        Cart existingCart = cartRepository.findById(cartDTO.getId()).orElseThrow(
+                () -> new EntityNotFoundException("Cart " + cartDTO.getId() + " not found")
         );
         existingCart.setActive(false);
         cartRepository.save(existingCart);

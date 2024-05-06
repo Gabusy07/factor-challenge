@@ -15,6 +15,6 @@
     <span>$ {{price?? ''}}</span>
   </div>
   <div class="mt-4 mb-4 right-bottom-position">
-    <app-button  [label]="'comprar'" [color]="'success'" (click)="buyProduct()"></app-button>
+    <app-button [disabled]="disabled" [label]="'comprar'" [color]="'success'" (click)="buttomClicked()"></app-button>
   </div>
 </div>

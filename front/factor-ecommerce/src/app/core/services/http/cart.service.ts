@@ -13,7 +13,12 @@ export class CartService {
   constructor(private httpClient: HttpClient) {}
 
   obtainCart(UserId: number): Observable<Cart>{
-    const URL = `${this.URL}/1`;
+    const URL = `${this.URL}1`;
     return this.httpClient.get<any>(URL);  
+  }
+
+  finalizePurchase(cart: Cart): Observable<void>{
+    const URL = `${this.URL}executePurchase`;
+    return this.httpClient.post<void>(URL, cart);  
   }
 }

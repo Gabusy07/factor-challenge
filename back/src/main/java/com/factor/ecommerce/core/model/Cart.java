@@ -68,7 +68,6 @@ public class Cart{
     }
 
     private double calTotalAmount() {
-        System.out.println("METODO ACTUALIZADO");
         double totalPrice = 0.0;
         if (productOrders != null) {
             for (ProductOrder order : productOrders) {

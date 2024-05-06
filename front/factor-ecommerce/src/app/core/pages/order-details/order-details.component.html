@@ -30,13 +30,13 @@
               </figcaption>
         </div>
     </div>
-    <div class="total-price">
+    <div class="absolute bottom-0 left-0 mb-2 ml-2 p-3">
         <p class="text-xl font-extrabold total-label">Precio Total:</p>
-        <p class="text-lg font-bold total-amount">$ {{cart.totalPrice | currency}}</p>
+        <p class="text-lg font-bold total-amount">$ {{cart?.totalPrice | currency}}</p>
     </div>
 
     <div class="absolute bottom-0 right-0 mb-2 mr-2 p-3">
-        <p-toast />
-        <app-button (click)="buy()" [label]="'completar compra'"></app-button>
+        
+        <app-button (click)="finalizePurchase()" [label]="'completar compra'"></app-button>
       </div>
 </section>

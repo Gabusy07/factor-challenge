@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,13 +12,16 @@ export class CardComponent {
   @Input() description: String | null = 'sin descripcion';
   @Input() imgSrc: String | undefined;
   @Input() price: Number | undefined;
+  @Input() disabled: Boolean = true;
+  @Output() buttonClicked: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   defaultImg = '../assets/products/Image_not_available.png';
 
 
-  constructor(private router: Router) {}
+  constructor() {}
 
-  buyProduct(): void {
-      this.router.navigate(['order-details'] );
+  buttomClicked() {
+    this.buttonClicked.emit(true);
+      
     }
 }

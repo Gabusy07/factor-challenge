@@ -26,8 +26,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     CommonModule,
     ButtonComponent,
     InputComponent,
-    MainRoutingModule,
-    BrowserAnimationsModule,
+    MainRoutingModule
   ]
 })
 export class MainModule { }
