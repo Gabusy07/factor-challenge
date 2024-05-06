@@ -56,7 +56,7 @@ export class HomeComponent implements OnInit {
     let createdOrder = this.createNewOrder(product);
     this.orderHttpService.createOrder(createdOrder).subscribe({
       next: () => {
-        this.cartService.obtainCart(1).subscribe({
+        this.cartService.obtainCart(this.userId).subscribe({
           next: (data) => {
             this.localStorageService.set('currentCart', data);
             this.loading = false;
