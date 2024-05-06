@@ -1,5 +1,5 @@
 module.exports = {
   production: true,
   ENV: "prod",
-  API_BASE_URL: "localhost:8080",
+  API_BASE_URL: "",
 };
