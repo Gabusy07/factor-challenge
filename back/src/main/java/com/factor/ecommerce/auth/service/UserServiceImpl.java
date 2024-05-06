@@ -1,5 +1,6 @@
 package com.factor.ecommerce.auth.service;
 
+import com.factor.ecommerce.auth.dto.TokenResponse;
 import com.factor.ecommerce.auth.exception.IncorrectPasswordException;
 import com.factor.ecommerce.auth.exception.UsernameNotFoundException;
 import com.factor.ecommerce.auth.model.User;
@@ -23,7 +24,7 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public String login(User user) throws RuntimeException {
+    public TokenResponse login(User user) throws RuntimeException {
         Optional<User> userOptional = this.userRepository.findByUsername(user.getUsername());
         if (userOptional.isPresent()) {
             User dbUser = userOptional.get();
@@ -31,7 +32,8 @@ public class UserServiceImpl implements UserService{
             String inputPassword = user.getPassword();
 
             if (new BCryptPasswordEncoder().matches(inputPassword, dbPassword)) {
-                String token = jwtUtil.generateToken(user.getUsername());
+                String tokenStr = jwtUtil.generateToken(user.getUsername());
+                TokenResponse token = new TokenResponse(tokenStr, null, user.getId());
                 return token;
             } else {
                 throw new IncorrectPasswordException("password incorrect");

@@ -1,5 +1,6 @@
 package com.factor.ecommerce.auth.controller;
 
+import com.factor.ecommerce.auth.dto.TokenResponse;
 import com.factor.ecommerce.auth.exception.IncorrectPasswordException;
 import com.factor.ecommerce.auth.exception.UsernameNotFoundException;
 import com.factor.ecommerce.auth.model.User;
@@ -28,7 +29,7 @@ public class AuthController {
     @PostMapping("login")
     public ResponseEntity<?> login(@RequestBody User request){
            try{
-               String token = userService.login(request);
+               TokenResponse token = userService.login(request);
                return ResponseEntity.ok().body(token);
 
            }catch (IncorrectPasswordException e){
