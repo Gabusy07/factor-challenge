@@ -72,7 +72,7 @@ export class HomeComponent implements OnInit {
     return {
       quantityOrder: 1,
       productId: product.id,
-      cartId: this.cart?.id || 0, // harcodeado
+      cartId: this.cart?.id || 0
     };
   }
 }

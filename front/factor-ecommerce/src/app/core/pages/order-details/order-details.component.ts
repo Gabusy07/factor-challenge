@@ -73,6 +73,7 @@ if (cartString) {
     this.cartService.finalizePurchase(this.cart!).subscribe(
       {
         next: () => {
+          this.localStorageService.remove('currentCart')
           this.loading = false;
           this.purchaseCompleted = true;
          
