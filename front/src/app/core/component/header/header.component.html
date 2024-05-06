@@ -1,0 +1,28 @@
+<header>
+    <div class="flex justify-between items-center px-2 py-2 gap-5">
+      <h1 class="hidden sm:hidden md:block text-red-200">Bienvenido</h1>
+  
+      <div class="flex items-end gap-x-4 w-5/4 mx-auto">
+        <app-input [placeholder]="'buscar producto'"></app-input>
+        <app-button [color]="'light'" [height]="'2.25rem'" [width]="'6rem'" [label]="'Buscar'"></app-button>
+      </div>
+  
+      
+        <div class="dropdown mr-5">
+          <span class="cursor-pointer" (click)="navigateToLoginPage()">{{Username?? 'iniciar sesion'}}</span>
+          <ul *ngIf="Username" class="dropdown-content rounded-lg w-full">
+                  <li class="dropdown-item rounded">
+                    <p>ver perfil</p>
+                  </li>
+                  <li class="dropdown-item rounded">
+                    <p (click)="navigateToOrder()">ver carrito</p>
+                  </li>
+                  <li class="dropdown-item rounded">
+                    <p (click)="closeSesion()">cerrar sesion</p>
+                  </li>
+          </ul>
+        </div>
+     
+    </div>
+  </header>
+

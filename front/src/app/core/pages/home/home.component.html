@@ -1,0 +1,24 @@
+<main>
+  <section class="h-[100vh]">
+    <div
+      class="py-8 px-5 lg:px-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-3 gap-5"
+      *ngIf="products.length; else elseBlock"
+    >
+      <div *ngFor="let product of products">
+        <app-card
+          [description]="product.description"
+          [imgSrc]="product.image"
+          [title]="product.name"
+          [price]="product.price"
+          [disabled] = "!cart"
+          (buttonClicked)="addProductToCart(product)"
+        ></app-card>
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div class="flex justify-center items-center h-full">
+        <div class="text-2xl font-bold underline">Sin productos</div>
+      </div>
+    </ng-template>
+  </section>
+</main>

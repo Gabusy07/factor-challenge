@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Order */
+@layer reset, primeng;
+
+/* Reset CSS */
+@layer reset {
+    button,
+    input {
+        /* CSS to Reset */
+    }
+}
+
+
+:root {
+    --color-violet: rgb(73 35 242);
+    --color-primary: #3c71ecad;
+    --z-high-priority: 1000;
+    --z-priority: 100;
+    --z-base: 1;
+    --z-lower: 0;
+  }
+
+
