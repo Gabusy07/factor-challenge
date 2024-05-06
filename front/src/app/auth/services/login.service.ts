@@ -1,15 +1,16 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
 import { TokenResponse } from '../interfaces/Token';
+import { environment as env } from 'src/environments/environment.dev';
 
 @Injectable({
   providedIn: 'root'
 })
 export class LoginService {
 
-  private URL = "http://localhost:8080/api/v1/auth/";
+  private URL =`${env.API_BASE_URL}/api/v1/auth/`;
 
   constructor( 
     private httpClient: HttpClient,
@@ -24,7 +25,7 @@ export class LoginService {
       responseType: 'text' as 'json'
     };
     
-    return this.httpClient.post<any>(URL, loginDto, options).pipe(
+    return this.httpClient.post<TokenResponse>(URL, loginDto, options).pipe(
       tap((result: TokenResponse) => {
         this.localStorageService.set('sessionToken', result.token);
         this.localStorageService.set('id', result.id);

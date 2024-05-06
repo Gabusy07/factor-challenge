@@ -7,8 +7,9 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="username">email:</label>
         <input name="username" [ngClass]="{'border-red-500' : Username?.errors && Username?.touched, 'border-green-500' : !Username?.errors && Username?.touched}"  class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500" type="username" required formControlName="username" />
         <div *ngIf="Username?.errors && Username?.touched" class="mt-2">
-          <small *ngIf="Username?.hasError('required')" class="text-red-500 w-full border border-red-500">El campo email no debe estar vacío</small>
-          <small *ngIf="Username?.hasError('username')" class="text-red-500 w-full border border-red-500">El email ingresado no es válido</small>
+          <small *ngIf="Username?.hasError('incorrect')" class="text-red-500 w-full  underline">Email incorrecto</small>
+          <small *ngIf="Username?.hasError('required')" class="text-red-500 w-full  underline">El campo email no debe estar vacío</small>
+          <small *ngIf="Username?.hasError('username')" class="text-red-500 w-full underline">El email ingresado no es válido</small>
         </div>
       </div>
   
@@ -16,9 +17,10 @@
         <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Contraseña:</label>
         <input name="password" [ngClass]="{'border-red-500' : Password?.errors && Password?.touched, 'border-green-500' : !Password?.errors && Password?.touched}" class="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500" type="password" formControlName="password" />
         <div *ngIf="Password?.errors && Password?.touched" class="mt-2">
-          <small *ngIf="Password?.hasError('required')" class="text-red-500 w-full border border-red-500">El campo contraseña no debe estar vacío</small>
-          <small *ngIf="Password?.errors?.['minlength']" class="text-red-500">El campo contraseña debe ser más larga</small>
-          <small *ngIf="Password?.errors?.['maxlength']" class="text-red-500">El campo contraseña debe ser más corta</small>
+          <small *ngIf="Password?.hasError('required')" class="text-red-500 w-full underline">El campo contraseña no debe estar vacío</small>
+          <small *ngIf="Password?.hasError('incorrect')" class="text-red-500 w-full underline">Contraseña incorrecta</small>
+          <small *ngIf="Password?.errors?.['minlength']" class="text-red-500 underline">El campo contraseña debe ser más larga</small>
+          <small *ngIf="Password?.errors?.['maxlength']" class="text-red-500 underline">El campo contraseña debe ser más corta</small>
         </div>
       </div>
   

@@ -45,7 +45,8 @@ export class LoginComponent {
         this.route.navigate(['']);
       },
       error: (error) => {
-        alert('Error al iniciar sesión ' + error.error)
+        if (error.error === 'username incorrect') this.Username?.setErrors({incorrect: true});
+        else if (error.error === 'password incorrect') this.Password?.setErrors({incorrect: true});
         console.error('Error al iniciar sesión ', error.error);
       },
     });
