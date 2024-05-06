@@ -1,15 +1,14 @@
 package com.factor.ecommerce.auth.controller;
 
-import com.factor.ecommerce.auth.dto.TokenResponse;
+import com.factor.ecommerce.auth.controller.request.UserRequest;
+import com.factor.ecommerce.auth.controller.request.response.ErrorResponse;
+import com.factor.ecommerce.auth.controller.request.response.UserResponse;
 import com.factor.ecommerce.auth.exception.IncorrectPasswordException;
 import com.factor.ecommerce.auth.exception.UsernameNotFoundException;
-import com.factor.ecommerce.auth.model.User;
-import com.factor.ecommerce.auth.service.JwtTokenService;
 import com.factor.ecommerce.auth.service.UserService;
-import com.factor.ecommerce.auth.utils.JwtUtil;
-import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,21 +26,21 @@ public class AuthController {
     }
 
     @PostMapping("login")
-    public ResponseEntity<?> login(@RequestBody User request){
+    public ResponseEntity<?> login(@RequestBody UserRequest request){
            try{
-               TokenResponse token = userService.login(request);
-               return ResponseEntity.ok().body(token);
+               UserResponse response = userService.login(request);
+               return ResponseEntity.status(HttpStatus.OK).body(response);
 
            }catch (IncorrectPasswordException e){
                logger.error(e.getMessage());
                e.printStackTrace();
-               return  ResponseEntity.badRequest().body(e.getMessage());
+               return  ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
 
            }
            catch (UsernameNotFoundException e){
                logger.error(e.getMessage());
                e.printStackTrace();
-               return  ResponseEntity.badRequest().body(e.getMessage());
+               return  ResponseEntity.badRequest().body(new ErrorResponse(e.getMessage()));
            }
            catch (Exception e){
                logger.error(e.getMessage());

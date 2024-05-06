@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
-import { TokenResponse } from '../interfaces/Token';
+import { LoginResponse } from '../interfaces/LoginResponse';
 import { environment as env } from 'src/environments/environment.dev';
 
 @Injectable({
@@ -21,12 +21,10 @@ export class LoginService {
     const URL = `${this.URL}login`;
     const loginDto = this.getLoginDto(data);
     this.localStorageService.set('username', data.username);
-    const options = {
-      responseType: 'text' as 'json'
-    };
+   
     
-    return this.httpClient.post<TokenResponse>(URL, loginDto, options).pipe(
-      tap((result: TokenResponse) => {
+    return this.httpClient.post<any>(URL, loginDto).pipe(
+      tap((result: LoginResponse) => {
         this.localStorageService.set('sessionToken', result.token);
         this.localStorageService.set('id', result.id);
         if (!result) {

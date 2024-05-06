@@ -1,6 +1,6 @@
-export interface TokenResponse {
+export interface LoginResponse {
     token: string;
-    expiration: string;
+    message:string
     id: number; // TODO eliminar id
 
 }
