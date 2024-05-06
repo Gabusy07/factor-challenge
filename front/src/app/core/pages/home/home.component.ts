@@ -18,7 +18,7 @@ export class HomeComponent implements OnInit {
   loading: Boolean = false;
   hasError: boolean = false;
   cart: Cart | undefined;
-  defaultUserId = 1;
+  userId;
 
   constructor(
     private readonly productHttpService: ProductHttpService,
@@ -27,9 +27,10 @@ export class HomeComponent implements OnInit {
     private readonly cartService: CartService,
     private readonly localStorageService: LocalStorageService,
   ) {
+    this.userId = Number(this.localStorageService.get('id')) ;
     let username = this.localStorageService.get('username');
     if (username) {
-      this.cartService.obtainCart(this.defaultUserId).subscribe({
+      this.cartService.obtainCart(this.userId).subscribe({
         next: (data) => {
           this.cart = data;
           this.localStorageService.set('currentCart', this.cart);

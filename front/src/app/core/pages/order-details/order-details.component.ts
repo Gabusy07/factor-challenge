@@ -15,7 +15,7 @@ import { OrderHttpService } from '../../services/http/order.service';
   styleUrls: ['./order-details.component.scss'],
 })
 export class OrderDetailsComponent implements OnDestroy {
-  defaultUserId = 1;
+  userId = 0;
   hasError = false;
   orders: Order[] | undefined;
   //orders = orderMock;
@@ -23,13 +23,13 @@ export class OrderDetailsComponent implements OnDestroy {
   loading: Boolean = false;
   purchaseCompleted: Boolean = false;
 
-  //protected cart: Cart | undefined;
 
   constructor(
     private readonly cartService: CartService,
     private readonly router: Router,
     private readonly localStorageService: LocalStorageService
   ) {
+    this.userId = Number(this.localStorageService.get('id')) ;
 
     const cartString =  this.localStorageService.get('currentCart'); 
 if (cartString) {
@@ -50,8 +50,9 @@ if (cartString) {
   ngOnDestroy(): void {
     
     if(this.cart) {
-      this.cart.productOrders = [];
-      this.cartService.update(this.cart, this.defaultUserId).subscribe(
+      //this.cart.productOrders = [];
+      console.log(this.cart)
+      this.cartService.update(this.cart, this.userId).subscribe(
       {
         error: err=> console.error(err)
       }
@@ -64,6 +65,7 @@ if (cartString) {
     if(!(order.quantityOrder >= order.product.stock)){
       order.quantityOrder++;
       this.cart!.totalPrice += order.product.price;
+      console.log(this.cart)
 
     }
    
