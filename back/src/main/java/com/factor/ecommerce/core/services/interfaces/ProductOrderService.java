@@ -13,7 +13,7 @@ public interface ProductOrderService {
     Optional<ProductOrder> createOrder(ProductOrderRequest request);
     Boolean deleteProductOrder(Integer id);
 
-    Optional<ProductOrder> update(Integer id, ProductOrderRequest request);
+    ProductOrder update(Integer id, ProductOrder order);
     ProductOrderDTO getOrder(Integer id);
     List<ProductOrderDTO> getAll(Integer cartId);
 }

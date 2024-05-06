@@ -60,14 +60,4 @@ public class ProductOrderController {
         return ResponseEntity.accepted().build();
     }
 
-    @PatchMapping("update/{cartId}")
-    public ResponseEntity<ProductOrder> update(@RequestBody ProductOrderRequest order,
-                                               @PathVariable Integer cartId
-    ){
-        Optional<ProductOrder> op = productOrderService.update(cartId, order);
-        if(op.isEmpty()){
-            return ResponseEntity.status(HttpStatusCode.valueOf(501)).build();
-        }
-        return ResponseEntity.ok().body(op.get());
-    }
 }

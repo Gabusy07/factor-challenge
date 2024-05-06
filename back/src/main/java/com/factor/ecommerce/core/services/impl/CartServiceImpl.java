@@ -7,9 +7,9 @@ import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
-import com.factor.ecommerce.core.persistence.repository.ProductOrderRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
+import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -17,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -31,19 +32,19 @@ public class CartServiceImpl implements CartService {
     private final DiscountService discountService;
     private final CartMapper cartMapper;
 
-    private final ProductOrderRepository productOrderRepository;
+    private final ProductOrderService productOrderService;
 
 
     public CartServiceImpl(CartRepository cartRepository,
                            UserService userService,
                            DiscountService discountService,
                            CartMapper cartMapper,
-                           ProductOrderRepository productOrderRepository) {
+                           ProductOrderService productOrderService) {
         this.cartRepository = cartRepository;
         this.userService = userService;
         this.discountService = discountService;
         this.cartMapper = cartMapper;
-        this.productOrderRepository = productOrderRepository;
+        this.productOrderService = productOrderService;
     }
 
 
@@ -84,7 +85,11 @@ public class CartServiceImpl implements CartService {
     }
 
     private List<ProductOrder> saveAllProductOrders(CartDTO cartDTO) {
-        List<ProductOrder> productOrders = productOrderRepository.saveAll(cartDTO.getProductOrders());
+        List<ProductOrder> productOrders =  new ArrayList<>();
+        for (ProductOrder order : cartDTO.getProductOrders()){
+            ProductOrder p = productOrderService.update(order.getId(), order);
+            productOrders.add(p);
+        }
         return productOrders;
     }
 
