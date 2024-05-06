@@ -9,6 +9,7 @@ import { InputComponent } from '../shared/input/input.component';
 import { MainRoutingModule } from './main-routing.module';
 import { CommonModule } from '@angular/common';
 import { TruncatePipe } from '../pipes/truncate.pipe';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 
@@ -20,14 +21,13 @@ import { TruncatePipe } from '../pipes/truncate.pipe';
     CardComponent,
     OrderDetailsComponent,
     TruncatePipe
-
-
   ],
   imports: [
     CommonModule,
     ButtonComponent,
     InputComponent,
-    MainRoutingModule
+    MainRoutingModule,
+    BrowserAnimationsModule,
   ]
 })
 export class MainModule { }

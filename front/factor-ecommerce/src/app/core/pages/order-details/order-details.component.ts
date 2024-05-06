@@ -4,6 +4,7 @@ import { Cart } from '../../interfaces/Cart';
 import { Order } from '../../interfaces/Order';
 import { orderMock } from './OrderMock';
 import { cartMock } from './CartMock';
+import { ToastModule } from 'primeng/toast';
 
 @Component({
   selector: 'app-order-details',
