@@ -36,6 +36,8 @@ git clone https://github.com/Gabusy07/factor-challenge.git
 ```bash
 cd /factor-challenge/back 
 ```
+
+- luego crear proyecto maven
 2. construir las imagenes:
 ```bash
    Docker-compose build
