@@ -9,13 +9,14 @@ import { Router } from '@angular/router';
 export class CardComponent {
 
   @Input() title: String = 'sin titulo';
-  @Input() description: String = 'sin descripcion';
-  @Input() imgSrc: String = '../assets/products/D_NQ_NP_912227-MLA71782903150_092023-O.webp';
+  @Input() description: String | null = 'sin descripcion';
+  @Input() imgSrc: String | undefined;
+  @Input() price: Number | undefined;
 
-  constructor(private router: Router) {
-    this.description =
-      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque quos suscipit autem animi est mollitia, quas aspernatur dolore. Harum repellat necessitatibus, exercitationem voluptatum earum dolorem ipsa quam officiis illum fugiat.';
-  }
+  defaultImg = '../assets/products/Image_not_available.png';
+
+
+  constructor(private router: Router) {}
 
   buyProduct(): void {
       this.router.navigate(['order-details'] );

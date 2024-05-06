@@ -5,12 +5,16 @@
     </h2>
   </div>
   <div class="mb-3">
-    <img class="img" [src]="imgSrc" /> 
+    <img class="img" [src]="imgSrc?? defaultImg" /> 
+  </div>
+  <p>{{imgSrc}}</p>
+  <div>
+    <p>{{description?? '' | truncate:255}}</p>
   </div>
   <div>
-    <p>{{description}}</p>
+    <span>$ {{price?? ''}}</span>
   </div>
-  <div class="mt-4 mb-4">
+  <div class="mt-4 mb-4 right-bottom-position">
     <app-button  [label]="'comprar'" [color]="'success'" (click)="buyProduct()"></app-button>
   </div>
 </div>

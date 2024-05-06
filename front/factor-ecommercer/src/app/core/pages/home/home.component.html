@@ -5,7 +5,12 @@
       *ngIf="products.length; else elseBlock"
     >
       <div *ngFor="let product of products">
-        <app-card></app-card>
+        <app-card
+          [description]="product.description"
+          [imgSrc]="product.image"
+          [title]="product.name"
+          [price]="product.price"
+        ></app-card>
       </div>
     </div>
     <ng-template #elseBlock>

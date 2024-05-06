@@ -8,6 +8,7 @@ import { ButtonComponent } from '../shared/button/button.component';
 import { InputComponent } from '../shared/input/input.component';
 import { MainRoutingModule } from './main-routing.module';
 import { CommonModule } from '@angular/common';
+import { TruncatePipe } from '../pipes/truncate.pipe';
 
 
 
@@ -18,6 +19,8 @@ import { CommonModule } from '@angular/common';
     HeaderComponent,
     CardComponent,
     OrderDetailsComponent,
+    TruncatePipe
+
 
   ],
   imports: [

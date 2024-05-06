@@ -20,7 +20,6 @@ import { RouterModule } from '@angular/router';
     MainModule,
     RouterModule
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
