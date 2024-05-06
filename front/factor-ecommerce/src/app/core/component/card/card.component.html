@@ -7,11 +7,10 @@
   <div class="mb-3">
     <img class="img" [src]="imgSrc?? defaultImg" /> 
   </div>
-  <p>{{imgSrc}}</p>
   <div>
     <p>{{description?? '' | truncate:255}}</p>
   </div>
-  <div>
+  <div class="mt-4 mb-4 left-bottom-position font-semibold">
     <span>$ {{price?? ''}}</span>
   </div>
   <div class="mt-4 mb-4 right-bottom-position">
