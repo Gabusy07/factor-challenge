@@ -1,5 +1,6 @@
 # Ecommerce challenge
-> . funcionalidades implementadas. Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. A clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
+### funcionalidades implementadas:
+>  Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. A clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
 >
 > # credenciales para iniciar sesión:
 >  - username: common@email.com password: siberia123
