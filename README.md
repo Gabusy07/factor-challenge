@@ -1,6 +1,6 @@
 # Ecommerce challenge
 ### funcionalidades implementadas:
->  Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. Al clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
+>  Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. Al clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. El carrito se destruye si no se ha realizado una compra en 24 horas. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
 >
 >
 > # credenciales para iniciar sesión:
@@ -92,6 +92,7 @@ Para ver la base de datos deberas acceder con las siguientes credenciales:
 ## Status
 
 En desarrollo
+no se han realizado pruebas sobre los descuentos aplicados
 
 ## To do: 
 - Implementar cambio categoria en usuarios
