@@ -27,9 +27,8 @@ export class HomeComponent implements OnInit {
     private readonly cartService: CartService,
     private readonly localStorageService: LocalStorageService,
   ) {
-
     let username = this.localStorageService.get('username');
-    if(username){
+    if (username) {
       this.cartService.obtainCart(this.defaultUserId).subscribe({
         next: (data) => {
           this.cart = data;
@@ -42,8 +41,6 @@ export class HomeComponent implements OnInit {
       });
     }
   }
-
-
 
   ngOnInit(): void {
     this.productHttpService.getAllProducts().subscribe({
@@ -58,8 +55,14 @@ export class HomeComponent implements OnInit {
     let createdOrder = this.createNewOrder(product);
     this.orderHttpService.createOrder(createdOrder).subscribe({
       next: () => {
-        this.loading = false;
-        this.router.navigate(['order-details']);
+        this.cartService.obtainCart(1).subscribe({
+          next: (data) => {
+            this.localStorageService.set('currentCart', data);
+            this.loading = false;
+            this.router.navigate(['order-details']);
+          },
+          error: (err) => console.error(err),
+        });
       },
       error: (err) => {
         console.error(err);
@@ -72,7 +75,7 @@ export class HomeComponent implements OnInit {
     return {
       quantityOrder: 1,
       productId: product.id,
-      cartId: this.cart?.id || 0
+      cartId: this.cart?.id || 0,
     };
   }
 }

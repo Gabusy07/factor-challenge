@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { CartService } from '../../services/http/cart.service';
 import { Cart } from '../../interfaces/Cart';
 import { Order } from '../../interfaces/Order';
@@ -7,13 +7,14 @@ import { cartMock } from './CartMock';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
+import { OrderHttpService } from '../../services/http/order.service';
 
 @Component({
   selector: 'app-order-details',
   templateUrl: './order-details.component.html',
   styleUrls: ['./order-details.component.scss'],
 })
-export class OrderDetailsComponent {
+export class OrderDetailsComponent implements OnDestroy {
   defaultUserId = 1;
   hasError = false;
   orders: Order[] | undefined;
@@ -27,7 +28,7 @@ export class OrderDetailsComponent {
   constructor(
     private readonly cartService: CartService,
     private readonly router: Router,
-    private readonly localStorageService: LocalStorageService,
+    private readonly localStorageService: LocalStorageService
   ) {
 
     const cartString =  this.localStorageService.get('currentCart'); 
@@ -46,6 +47,16 @@ if (cartString) {
 
     
 }
+  ngOnDestroy(): void {
+    
+    if(this.cart) {
+      this.cart.productOrders = [];
+      this.cartService.update(this.cart, this.defaultUserId).subscribe(
+      {
+        error: err=> console.error(err)
+      }
+    );}
+  }
 
 
   addQuantity(order: Order):void{

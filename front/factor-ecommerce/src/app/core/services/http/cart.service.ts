@@ -7,6 +7,7 @@ import { Cart } from '../../interfaces/Cart';
   providedIn: 'root'
 })
 export class CartService {
+ 
 
   private URL = "http://localhost:8080/api/v1/carts/";
 
@@ -20,5 +21,11 @@ export class CartService {
   finalizePurchase(cart: Cart): Observable<void>{
     const URL = `${this.URL}executePurchase`;
     return this.httpClient.post<void>(URL, cart);  
+  }
+
+  update(cart: Cart, userId: number) {
+    const URL = `${this.URL}update/${userId}`;
+    return this.httpClient.patch<Cart>(URL, cart); 
+    
   }
 }
