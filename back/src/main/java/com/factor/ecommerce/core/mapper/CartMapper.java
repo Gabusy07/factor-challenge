@@ -3,7 +3,6 @@ package com.factor.ecommerce.core.mapper;
 import com.factor.ecommerce.core.dto.CartDTO;
 import com.factor.ecommerce.core.model.Cart;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 

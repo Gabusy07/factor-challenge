@@ -1,8 +1,9 @@
 package com.factor.ecommerce.core.services.impl;
 
-import com.factor.ecommerce.core.dto.CartDTO;
+import com.factor.ecommerce.core.dto.ProductOrderDTO;
 import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.controller.request.ProductOrderRequest;
+import com.factor.ecommerce.core.mapper.ProductOrderMapper;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.model.Product;
 import com.factor.ecommerce.core.model.ProductOrder;
@@ -11,6 +12,7 @@ import com.factor.ecommerce.core.persistence.repository.ProductOrderRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
 import com.factor.ecommerce.core.services.interfaces.ProductService;
+import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,14 +32,17 @@ public class ProductOrderServiceImpl implements ProductOrderService {
     private final CartMapper cartMapper;
     private final CartRepository cartRepository;
 
+    private final ProductOrderMapper productOrderMapper;
+
     public ProductOrderServiceImpl(ProductOrderRepository productOrderRepository,
                                    CartService cartService,
-                                   ProductService productService, CartMapper cartMapper, CartRepository cartRepository) {
+                                   ProductService productService, CartMapper cartMapper, CartRepository cartRepository, ProductOrderMapper productOrderMapper) {
         this.productOrderRepository = productOrderRepository;
         this.cartService = cartService;
         this.productService = productService;
         this.cartMapper = cartMapper;
         this.cartRepository = cartRepository;
+        this.productOrderMapper = productOrderMapper;
     }
 
 
@@ -49,9 +54,14 @@ public class ProductOrderServiceImpl implements ProductOrderService {
         if ( c_op.isPresent() && p_op.isPresent()){
             ProductOrder item = new ProductOrder.Builder().quantityOrder(
                             request.getQuantityOrder())
-                    .cart(c_op.get())
+                    //.cart(c_op.get())
                     .product(p_op.get())
                     .build();
+
+            ProductOrder po = productOrderRepository.save(item);
+            Cart cart = c_op.get();
+            cart.getProducts().add(po);
+            cartRepository.save(cart);
             return Optional.of(productOrderRepository.save(item));
         }
         return Optional.empty();
@@ -82,12 +92,16 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
 
     @Override
-    public Optional<ProductOrder> getOrder(Integer id) {
-        return productOrderRepository.findById(id);
+    public ProductOrderDTO getOrder(Integer id) {
+        ProductOrder productOrder = productOrderRepository.findById(id)
+                .orElseThrow(()-> new EntityNotFoundException("order not found")
+        );
+        return productOrderMapper.productOrderToProductOrderDTO(productOrder);
     }
 
     @Override
-    public List<ProductOrder> getAll(Integer cartId) {
-        return productOrderRepository.findAll();
+    public List<ProductOrderDTO> getAll(Integer cartId) {
+
+        return  productOrderMapper.productOrdersToProductOrdersDTO(productOrderRepository.findAll());
     }
 }

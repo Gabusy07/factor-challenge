@@ -18,15 +18,13 @@ public class ProductOrder {
     @JoinColumn(name = "product_id")
     private Product product;
 
+
     @ManyToOne
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
     private ProductOrder(){}
 
-    public Cart getCarts() {
-        return cart;
-    }
 
     public Integer getId() {
         return id;
@@ -52,7 +50,6 @@ public class ProductOrder {
     public static class Builder {
         private Integer quantityOrder;
         private Product product;
-        private Cart cart;
 
         public Builder quantityOrder(Integer quantityOrder) {
             this.quantityOrder = quantityOrder;
@@ -64,16 +61,13 @@ public class ProductOrder {
             return this;
         }
 
-        public Builder cart(Cart cart) {
-            this.cart = cart;
-            return this;
-        }
+
 
         public ProductOrder build() {
             ProductOrder order = new ProductOrder();
             order.quantityOrder = this.quantityOrder;
             order.product = this.product;
-            order.cart = this.cart;
+            //order.cart = this.cart;
             return order;
         }
     }

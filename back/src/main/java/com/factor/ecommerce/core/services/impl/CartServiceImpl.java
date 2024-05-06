@@ -87,39 +87,6 @@ public class CartServiceImpl implements CartService {
                 .build();
     }
 
-    /*
-    @Transactional
-    @Override
-    public Optional<CartDTO> getCart(Integer userId) {
-
-        Optional<User> userOptional = userService.getById(userId);
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            Cart oldCart = user.getCart();
-            Boolean isExpired = oldCart.getMaxDateAvailable().isBefore(LocalDateTime.now());
-            if (oldCart != null && !isExpired) {
-                if(isExpired){
-                    oldCart.setActive(false);
-                    return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
-                }
-                Double totalPrice = this.discountService.applyDiscount(oldCart, user); // aplico descuento segun el tipo y dia
-                Cart cart = new Cart.Builder()
-                        .id(oldCart.getId())
-                        .isActive(oldCart.getActive())
-                        .totalPrice(totalPrice)
-                        .user(oldCart.getUser())
-                        .maxDateAvailable(oldCart.getMaxDateAvailable())
-                        .productOrders(oldCart.getProductOrders())
-                        .initialDate(oldCart.getInitialDate())
-                        .build();
-                CartDTO cartDTO = cartMapper.cartToCartDTO(cart);
-                return Optional.of(cartDTO);
-            }
-            return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
-        }
-        logger.error("User not found");
-        return Optional.empty();
-    }*/
 
     @Transactional
     @Override
@@ -179,24 +146,13 @@ public class CartServiceImpl implements CartService {
                 .isActive(true)
                 .totalPrice(0.0)
                 .initialDate(date)
-                .maxDateAvailable(date.plusMinutes(1))
-                //.user(user)
+                .maxDateAvailable(date.plusHours(24))
+                .user(user)
                 .build();
         user.getCarts().add(cart);
         //userService.update(user);
         return cartRepository.save(cart);
     }
-
-    /*
-    private CartType getCartType(UserType userType) {
-        CartType ct = CartType.CART_COMMON;
-        if (userType.equals(UserType.USER_VIP)) {
-            ct = CartType.CART_VIP;
-        } else if (this.isSpecialDate()) {
-            ct = CartType.CART_DATE_SPECIAL;
-        }
-        return ct;
-    }*/
 
 }
 

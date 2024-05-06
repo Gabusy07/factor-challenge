@@ -1,6 +1,7 @@
 package com.factor.ecommerce.core.model;
 
 import com.factor.ecommerce.auth.model.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
@@ -28,7 +29,8 @@ public class Cart{
 
 
 
-    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<ProductOrder> productOrders = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)

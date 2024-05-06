@@ -1,8 +1,10 @@
 package com.factor.ecommerce.core.controller.api;
 
 import com.factor.ecommerce.core.controller.request.ProductOrderRequest;
+import com.factor.ecommerce.core.dto.ProductOrderDTO;
 import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
+import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatusCode;
@@ -28,12 +30,16 @@ public class ProductOrderController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<ProductOrder> getOne(@PathVariable Integer id){
-        Optional<ProductOrder>  op= productOrderService.getOrder(id);
-        if (op.isEmpty()) {
+    public ResponseEntity<ProductOrderDTO> getOne(@PathVariable Integer id){
+        try {
+            ProductOrderDTO op= productOrderService.getOrder(id);
+            return ResponseEntity.ok().body(op);
+
+        } catch (EntityNotFoundException e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
             return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok().body(op.get());
     }
 
     @PostMapping("create")
@@ -42,7 +48,7 @@ public class ProductOrderController {
         if(op.isEmpty()){
             return ResponseEntity.status(HttpStatusCode.valueOf(501)).build();
         }
-        return ResponseEntity.ok().body(op.get());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("delete/{orderId}")
