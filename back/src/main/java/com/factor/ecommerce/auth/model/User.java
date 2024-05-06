@@ -35,7 +35,7 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private Set<Cart> carts = new HashSet<>();
 
-    private User() {}
+    protected User() {}
 
 
     public Integer getId() {

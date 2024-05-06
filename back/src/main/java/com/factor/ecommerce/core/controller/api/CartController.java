@@ -31,7 +31,8 @@ public class CartController {
       }
 
     @PatchMapping("update/{userId}")
-    public ResponseEntity<?> updateCart(@PathVariable Integer userId, @RequestBody CartDTO cartDTO) {
+    public ResponseEntity<?> updateCart(@PathVariable Integer userId,
+                                        @RequestBody CartDTO cartDTO) {
 
         try {
             CartDTO response = cartService.update(cartDTO, userId);
@@ -48,7 +49,7 @@ public class CartController {
 
     }
 
-    @GetMapping("executePurchase/cartId{id}")
+    @GetMapping("executePurchase/cartId:{id}")
     public ResponseEntity<?> executePurchase(@PathVariable Integer id) {
         Boolean hasBeenExecuted = cartService.executePurchase(id);
         if(hasBeenExecuted){

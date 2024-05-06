@@ -7,6 +7,7 @@ import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
+import com.factor.ecommerce.core.persistence.repository.ProductOrderRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
 import jakarta.persistence.EntityNotFoundException;
@@ -30,44 +31,70 @@ public class CartServiceImpl implements CartService {
     private final DiscountService discountService;
     private final CartMapper cartMapper;
 
+    private final ProductOrderRepository productOrderRepository;
+
 
     public CartServiceImpl(CartRepository cartRepository,
                            UserService userService,
-                           DiscountService discountService, CartMapper cartMapper) {
+                           DiscountService discountService,
+                           CartMapper cartMapper,
+                           ProductOrderRepository productOrderRepository) {
         this.cartRepository = cartRepository;
         this.userService = userService;
         this.discountService = discountService;
         this.cartMapper = cartMapper;
+        this.productOrderRepository = productOrderRepository;
     }
 
 
+    @Transactional
     @Override
     public CartDTO update(CartDTO cartDto,Integer userId) {
+        //TODO trabajar con ProductOrderRequest o custom DTO en lugar de la entidad ProductOrder
         Optional<User> userOptional = userService.getById(userId);
         if (userOptional.isEmpty()) {
             logger.error("User not found");
             return null;
         }
-        Cart oldCart = cartRepository.findById(cartDto.getId()).orElseThrow(
+        List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
+        Cart oldCart = cartRepository.findActiveByUserId(userId).orElseThrow(
                 () -> new EntityNotFoundException("Cart " + cartDto.getId() + " not found")
         );
 
         if (isCartExpired(oldCart)) {
             oldCart.setActive(false);
+            logger.info("Cart was expirated");
             return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
         }
+
+
+
         User user = userOptional.get();
-        Double totalPrice = calculateTotalPrice(oldCart, user);
-        Cart cartUpdated = updateCartProducts(oldCart, totalPrice, cartDto.getProductOrders());
-        return cartMapper.cartToCartDTO(cartUpdated);
+
+        Cart cartUpdated = updateCartProducts(
+                oldCart,
+                productOrders);
+
+        Double totalPrice = calculateTotalPrice(cartUpdated, user);
+
+        cartUpdated.setTotalPrice(totalPrice);
+        System.out.println(totalPrice);
+        Cart cartSaved = cartRepository.save(cartUpdated);
+        return cartMapper.cartToCartDTO(cartSaved);
     }
 
-    private Cart updateCartProducts(Cart oldCart, Double totalPrice, List<ProductOrder> productOrder) {
+    private List<ProductOrder> saveAllProductOrders(CartDTO cartDTO) {
+        List<ProductOrder> productOrders = productOrderRepository.saveAll(cartDTO.getProductOrders());
+        return productOrders;
+    }
+
+
+    private Cart updateCartProducts(Cart oldCart, List<ProductOrder> productOrder) {
         return new Cart.Builder()
                 .id(oldCart.getId())
                 .isActive(oldCart.getActive())
-                .totalPrice(totalPrice)
                 .user(oldCart.getUser())
+                .totalPrice(oldCart.getTotalPrice())
                 .maxDateAvailable(oldCart.getMaxDateAvailable())
                 .productOrders(productOrder) // unico campo alterado
                 .initialDate(oldCart.getInitialDate())

@@ -37,14 +37,13 @@ public class Cart{
     private User user;
 
 
-    private Cart() {};
 
     public Integer getId() {
         return id;
     }
 
     public double getTotalPrice() {
-        this.calTotalAmount();
+        this.totalPrice = this.calTotalAmount();
         return totalPrice;
     }
 
@@ -68,16 +67,59 @@ public class Cart{
         this.productOrders = orders;
     }
 
-    private void calTotalAmount() {
-        double total = 0;
-        for (ProductOrder productOrder : productOrders) {
-            total += productOrder.getProduct().getPrice();
+    private double calTotalAmount() {
+        System.out.println("METODO ACTUALIZADO");
+        double totalPrice = 0.0;
+        if (productOrders != null) {
+            for (ProductOrder order : productOrders) {
+                totalPrice += order.getQuantityOrder() * order.getProduct().getPrice();
+            }
         }
-        this.totalPrice = total;
+        return totalPrice;
     }
+
+    public double calculateTotalCheapestProductPrice() {
+        if (productOrders == null || productOrders.isEmpty()) {
+            return 0.0;
+        }
+
+        double cheapestPrice = Double.MAX_VALUE;
+        Product cheapestProduct = null;
+        for (ProductOrder order : productOrders) {
+            double price = order.getProduct().getPrice();
+            if (price < cheapestPrice) {
+                cheapestPrice = price;
+                cheapestProduct = order.getProduct();
+            }
+        }
+        if (cheapestProduct == null) {
+            return 0.0;
+        }
+
+        double total = 0.0;
+        for (ProductOrder order : productOrders) {
+            if (order.getProduct().equals(cheapestProduct)) {
+                total += cheapestPrice * order.getQuantityOrder();
+                break; // Solo necesitamos calcular el total de una orden
+            }
+        }
+
+        return total;
+    }
+
 
     public LocalDateTime getInitialDate() {
         return initialDate;
+    }
+
+    public Integer getTotalQuantity() {
+        int totalQuantity = 0;
+        if (productOrders != null) {
+            for (ProductOrder order : productOrders) {
+                totalQuantity += order.getQuantityOrder();
+            }
+        }
+        return totalQuantity;
     }
 
     public LocalDateTime getMaxDateAvailable() {

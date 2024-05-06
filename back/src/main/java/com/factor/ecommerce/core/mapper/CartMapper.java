@@ -11,9 +11,9 @@ public interface CartMapper {
 
     CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
 
-
     CartDTO cartToCartDTO(Cart cart);
 
+    /*
     default Cart cartDTOtoCart(CartDTO cartDTO) {
         if (cartDTO == null) {
             return null;
@@ -25,6 +25,6 @@ public interface CartMapper {
                 .initialDate(cartDTO.getInitialDate())
                 .productOrders(cartDTO.getProductOrders())
                 .build();
-    }
+    }*/
 
 }

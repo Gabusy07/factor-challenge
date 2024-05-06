@@ -19,11 +19,12 @@ public class ProductOrder {
     @JoinColumn(name = "product_id")
     private Product product;
 
-    @ManyToOne
+
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    private ProductOrder(){}
 
 
     public Integer getId() {
