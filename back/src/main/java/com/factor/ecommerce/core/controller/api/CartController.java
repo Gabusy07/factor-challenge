@@ -48,7 +48,7 @@ public class CartController {
 
     }
 
-    @GetMapping("executePurchase/cartId{id}")
+    @GetMapping("executePurchase/cartId:{id}")
     public ResponseEntity<?> executePurchase(@PathVariable Integer id) {
         Boolean hasBeenExecuted = cartService.executePurchase(id);
         if(hasBeenExecuted){

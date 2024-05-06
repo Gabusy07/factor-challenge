@@ -50,6 +50,7 @@ public class CartServiceImpl implements CartService {
     @Transactional
     @Override
     public CartDTO update(CartDTO cartDto,Integer userId) {
+        //TODO trabajar con ProductOrderRequest o custom DTO en lugar de la entidad ProductOrder
         Optional<User> userOptional = userService.getById(userId);
         if (userOptional.isEmpty()) {
             logger.error("User not found");
