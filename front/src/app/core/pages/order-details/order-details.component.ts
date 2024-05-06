@@ -50,8 +50,6 @@ if (cartString) {
   ngOnDestroy(): void {
     
     if(this.cart) {
-      //this.cart.productOrders = [];
-      console.log(this.cart)
       this.cartService.update(this.cart, this.userId).subscribe(
       {
         error: err=> console.error(err)
@@ -89,6 +87,7 @@ if (cartString) {
           this.localStorageService.remove('currentCart')
           this.loading = false;
           this.purchaseCompleted = true;
+          alert("Compra realizada con éxito")
          
         },
         error: (err) =>  {
