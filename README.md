@@ -71,7 +71,7 @@ npm i
 npm run start:dev
 ```
 
-## Usage
+## Uso
 
 ### Backend (Swagger)
 Para acceder a swagger ve a http://localhost:port/swagger-ui/index.html#.
@@ -89,6 +89,6 @@ Para ver la base de datos deberas acceder con las siguientes credenciales:
 
 En desarrollo
 
-# To do: 
+## To do: 
 - Implementar cambio categoria en usuarios
 - Implementar spring security y manejo de peticiones por token
