@@ -10,7 +10,6 @@ import com.factor.ecommerce.core.persistence.repository.CartRepository;
 import com.factor.ecommerce.core.persistence.repository.ProductOrderRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
-import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -37,8 +36,9 @@ public class CartServiceImpl implements CartService {
 
     public CartServiceImpl(CartRepository cartRepository,
                            UserService userService,
-                           DiscountService discountService, CartMapper cartMapper
-                           , ProductOrderRepository productOrderRepository) {
+                           DiscountService discountService,
+                           CartMapper cartMapper,
+                           ProductOrderRepository productOrderRepository) {
         this.cartRepository = cartRepository;
         this.userService = userService;
         this.discountService = discountService;
@@ -68,11 +68,14 @@ public class CartServiceImpl implements CartService {
         List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
 
         User user = userOptional.get();
-        Double totalPrice = calculateTotalPrice(oldCart, user);
+
         Cart cartUpdated = updateCartProducts(
                 oldCart,
-                totalPrice,
+                oldCart.getTotalPrice(),
                 productOrders);
+       // Double totalPrice = calculateTotalPrice(cartUpdated, user);
+        //cartUpdated.setTotalPrice(totalPrice);
+        //cartRepository.save(cartUpdated);
         return cartMapper.cartToCartDTO(cartUpdated);
     }
 
@@ -82,12 +85,12 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    private Cart updateCartProducts(Cart oldCart, Double totalPrice, List<ProductOrder> productOrder) {
+    private Cart updateCartProducts(Cart oldCart,Double totalPrice, List<ProductOrder> productOrder) {
         return new Cart.Builder()
                 .id(oldCart.getId())
                 .isActive(oldCart.getActive())
-                .totalPrice(totalPrice)
                 .user(oldCart.getUser())
+                .totalPrice(totalPrice)
                 .maxDateAvailable(oldCart.getMaxDateAvailable())
                 .productOrders(productOrder) // unico campo alterado
                 .initialDate(oldCart.getInitialDate())

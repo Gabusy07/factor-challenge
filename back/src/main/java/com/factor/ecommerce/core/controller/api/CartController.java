@@ -31,7 +31,8 @@ public class CartController {
       }
 
     @PatchMapping("update/{userId}")
-    public ResponseEntity<?> updateCart(@PathVariable Integer userId, @RequestBody CartDTO cartDTO) {
+    public ResponseEntity<?> updateCart(@PathVariable Integer userId,
+                                        @RequestBody CartDTO cartDTO) {
 
         try {
             CartDTO response = cartService.update(cartDTO, userId);

@@ -10,11 +10,10 @@ import org.mapstruct.factory.Mappers;
 public interface CartMapper {
 
     CartMapper INSTANCE = Mappers.getMapper(CartMapper.class);
-    ProductOrderMapper productMapper = Mappers.getMapper(ProductOrderMapper.class);
-
 
     CartDTO cartToCartDTO(Cart cart);
 
+    /*
     default Cart cartDTOtoCart(CartDTO cartDTO) {
         if (cartDTO == null) {
             return null;
@@ -26,6 +25,6 @@ public interface CartMapper {
                 .initialDate(cartDTO.getInitialDate())
                 .productOrders(cartDTO.getProductOrders())
                 .build();
-    }
+    }*/
 
 }

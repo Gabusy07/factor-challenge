@@ -20,6 +20,8 @@ COPY src/ ./src
 
 RUN ./mvnw clean package -DskipTests
 
+RUN ./docker-compose build
+
 FROM openjdk:17-jdk-slim
 
 WORKDIR /ecommerce

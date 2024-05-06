@@ -38,7 +38,6 @@ public class Cart{
     private User user;
 
 
-    private Cart() {};
 
     public Integer getId() {
         return id;
