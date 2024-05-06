@@ -60,7 +60,7 @@ cd /factor-challenge/back
 1. Una vez levantado la base de datos y la aplicacion backend los pasos para el frontend con los siguientes:
 ```bash
  cd ..
- cd /front/factor-ecommercer
+ cd /front/factor-ecommerce
 ```
 2. instalar librerias:
 ```console
