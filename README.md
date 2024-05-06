@@ -92,3 +92,4 @@ En desarrollo
 ## To do: 
 - Implementar cambio categoria en usuarios
 - Implementar spring security y manejo de peticiones por token
+- implementar mensajes de error en front y manejo de caso orden producto no se vea duplicado sino que se sumen los productos
