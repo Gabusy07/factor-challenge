@@ -1,6 +1,7 @@
 # Ecommerce challenge
 ### funcionalidades implementadas:
->  Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. A clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
+>  Al ingresar a la vista principal hay una lista de productos precargados por base de datos. A continuacion en el header se encuentra en la parte derecha una opcion para iniciar sesion. No se pueden registrar usuarios. Una vez logueado podra seleccionar productos añadiendolos a un carrito. Al clickear en finalizar la compra se finaliza y se vuelve a la pagina principal. En la parte inferior de este archivo se listan las funcionalidades y tareas faltantes.
+>
 >
 > # credenciales para iniciar sesión:
 >  - username: common@email.com password: siberia123
@@ -11,6 +12,11 @@
 
 ## General
 Proyecto prueba tecnica ecommerce. Fecha limite Mayo/06/2024 20hrs
+
+## Sobre estructura del proyecto:
+>  El proyecto está dividido en dos aplicaciones: una aplicación backend y una frontend.
+El backend está construido con una arquitectura de tipo monolítica. Existen dos módulos principales en esta aplicación. El primero es un módulo para autenticación, mientras que el segundo se encuentra en el directorio /core y representa el núcleo de esa aplicación.
+El frontend sigue un diseño parecido, dividido en dos módulos principales: auth y core, junto con módulos que contienen archivos de componentes compartidos. Ambas aplicaciones siguen el diseño MVC y de capas.
 
 
 ## Tecnologias
