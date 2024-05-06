@@ -7,8 +7,10 @@ import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
+import com.factor.ecommerce.core.persistence.repository.ProductOrderRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
+import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -30,14 +32,18 @@ public class CartServiceImpl implements CartService {
     private final DiscountService discountService;
     private final CartMapper cartMapper;
 
+    private final ProductOrderRepository productOrderRepository;
+
 
     public CartServiceImpl(CartRepository cartRepository,
                            UserService userService,
-                           DiscountService discountService, CartMapper cartMapper) {
+                           DiscountService discountService, CartMapper cartMapper
+                           , ProductOrderRepository productOrderRepository) {
         this.cartRepository = cartRepository;
         this.userService = userService;
         this.discountService = discountService;
         this.cartMapper = cartMapper;
+        this.productOrderRepository = productOrderRepository;
     }
 
 
@@ -57,11 +63,23 @@ public class CartServiceImpl implements CartService {
             oldCart.setActive(false);
             return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
         }
+
+        List<ProductOrder> productOrders = saveAllProductOrders(cartDto);
+
         User user = userOptional.get();
         Double totalPrice = calculateTotalPrice(oldCart, user);
-        Cart cartUpdated = updateCartProducts(oldCart, totalPrice, cartDto.getProductOrders());
+        Cart cartUpdated = updateCartProducts(
+                oldCart,
+                totalPrice,
+                productOrders);
         return cartMapper.cartToCartDTO(cartUpdated);
     }
+
+    private List<ProductOrder> saveAllProductOrders(CartDTO cartDTO) {
+        List<ProductOrder> productOrders = productOrderRepository.saveAll(cartDTO.getProductOrders());
+        return productOrders;
+    }
+
 
     private Cart updateCartProducts(Cart oldCart, Double totalPrice, List<ProductOrder> productOrder) {
         return new Cart.Builder()

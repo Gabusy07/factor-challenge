@@ -25,7 +25,7 @@ public class ProductOrder {
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
-    private ProductOrder(){}
+    protected ProductOrder(){}
 
 
     public Integer getId() {
