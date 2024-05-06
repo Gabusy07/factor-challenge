@@ -36,6 +36,8 @@ git clone https://github.com/Gabusy07/factor-challenge.git
 ```bash
 cd /factor-challenge/back 
 ```
+
+- luego crear proyecto maven
 2. construir las imagenes:
 ```bash
    Docker-compose build
@@ -45,6 +47,10 @@ cd /factor-challenge/back
   docker-compose up
 ```
 4. Si falla la primera ejecucion interrumpir el proceso y volver a ejecutar el ultimo comando:
+5. En caso de no crearse correctamente los archivos .jar ejecutar la siguiente instrucción
+```bash
+  ./mvnw clean package -DskipTests
+```
 
 
 ### Frontend
