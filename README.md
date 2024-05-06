@@ -6,8 +6,10 @@
 > # credenciales para iniciar sesión:
 >  - username: common@email.com password: siberia123
 >  - username: vip@email.com password: antartida123
-> Live demo [_here_](/). # no implementado
-> Backend Demo [_here_](/swagger-ui/index.html#). #no implementado
+>
+>  - 
+> Live demo [_here_](/).  ( no implementado )
+> Backend Demo [_here_](/swagger-ui/index.html#). ( no implementado )
 
 
 ## General
