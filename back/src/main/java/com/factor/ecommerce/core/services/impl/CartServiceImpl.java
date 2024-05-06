@@ -41,6 +41,7 @@ public class CartServiceImpl implements CartService {
     }
 
 
+    @Transactional
     @Override
     public CartDTO update(CartDTO cartDto,Integer userId) {
         Optional<User> userOptional = userService.getById(userId);
@@ -48,7 +49,7 @@ public class CartServiceImpl implements CartService {
             logger.error("User not found");
             return null;
         }
-        Cart oldCart = cartRepository.findById(cartDto.getId()).orElseThrow(
+        Cart oldCart = cartRepository.findActiveByUserId(userId).orElseThrow(
                 () -> new EntityNotFoundException("Cart " + cartDto.getId() + " not found")
         );
 

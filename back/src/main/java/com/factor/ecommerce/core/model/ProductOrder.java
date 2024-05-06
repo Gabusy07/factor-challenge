@@ -1,5 +1,6 @@
 package com.factor.ecommerce.core.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 
@@ -19,7 +20,8 @@ public class ProductOrder {
     private Product product;
 
 
-    @ManyToOne
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "cart_id")
     private Cart cart;
 
@@ -51,6 +53,8 @@ public class ProductOrder {
         private Integer quantityOrder;
         private Product product;
 
+        private Cart cart;
+
         public Builder quantityOrder(Integer quantityOrder) {
             this.quantityOrder = quantityOrder;
             return this;
@@ -61,13 +65,18 @@ public class ProductOrder {
             return this;
         }
 
+        public Builder cart(Cart cart) {
+            this.cart = cart;
+            return this;
+        }
+
 
 
         public ProductOrder build() {
             ProductOrder order = new ProductOrder();
             order.quantityOrder = this.quantityOrder;
             order.product = this.product;
-            //order.cart = this.cart;
+            order.cart = this.cart;
             return order;
         }
     }

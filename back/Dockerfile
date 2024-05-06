@@ -12,13 +12,13 @@ COPY .mvn/ .mvn
 COPY mvnw  ./
 COPY pom.xml ./
 
-#RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
+RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 
-#RUN ./mvnw dependency:go-offline
+RUN ./mvnw dependency:go-offline
 
-#COPY src/ ./src
+COPY src/ ./src
 
-#RUN ./mvnw clean package -DskipTests
+RUN ./mvnw clean package -DskipTests
 
 FROM openjdk:17-jdk-slim
 
