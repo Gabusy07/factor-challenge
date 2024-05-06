@@ -92,6 +92,7 @@ Para ver la base de datos deberas acceder con las siguientes credenciales:
 ## Status
 
 En desarrollo
+no se han realizado pruebas sobre los descuentos aplicados
 
 ## To do: 
 - Implementar cambio categoria en usuarios
