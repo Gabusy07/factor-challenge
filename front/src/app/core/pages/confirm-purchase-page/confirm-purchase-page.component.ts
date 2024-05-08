@@ -44,43 +44,16 @@ console.error('object currentCart not found.');
 
   
 }
-ngOnDestroy(): void {
-  
-  if(this.cart) {
-    this.cartService.update(this.cart, this.userId).subscribe(
-    {
-      error: err=> console.error(err)
-    }
-  );}
-}
 
-
-addQuantity(order: Order):void{
-
-  if(!(order.quantityOrder >= order.product.stock)){
-    order.quantityOrder++;
-    this.cart!.totalPrice += order.product.price;
-    console.log(this.cart)
-
-  }
- 
-}
-subQuantity(order: Order):void{
-  if(order.quantityOrder > 0){
-    order.quantityOrder--;
-    this.cart!.totalPrice -= order.product.price;
-    if(this.cart!.totalPrice  < 0){
-      this.cart!.totalPrice = 0;
-      
-    }
-  }
-}
 
 get totalAmount(){
-  return this.cart?.totalPrice ?? 0 - (this.cart?.totalDiscount?? 0) ?? 0;
+  let result = 0;
+  if(this.cart?.totalPrice && this.cart?.totalDiscount) result = this.cart?.totalPrice - this.cart?.totalDiscount;
+  return result;
 
 
 }
+
 
 finalizePurchase(){
   this.loading = true;

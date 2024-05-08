@@ -37,17 +37,9 @@
         <p class="text-xl font-extrabold total-label">Precio Total:</p>
         <p class="text-lg font-bold total-amount"> {{ cart?.totalPrice | currency }}</p>
       </div>
-      <div>
-        <p class="text-xl font-extrabold total-label">Descuento:</p>
-        <p class="text-lg font-bold total-amount">- {{ cart?.totalDiscount?? 0.0 | currency }}</p>
-      </div>
-      <div>
-        <p class="text-xl font-extrabold total-label">Precio final:</p>
-        <p class="text-lg font-bold total-amount"> {{ cart?.totalPrice | currency }}</p>
-      </div>
     </div>
     <div class="absolute right-0 bottom-0">
-      <app-button (click)="finalizePurchase()" [label]="'completar compra'"></app-button>
+      <app-button (click)="continue()" [label]="'continuar'"></app-button>
     </div>
   </div>
 </section>

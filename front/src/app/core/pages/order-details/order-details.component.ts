@@ -7,7 +7,6 @@ import { cartMock } from './CartMock';
 import { ToastModule } from 'primeng/toast';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
-import { OrderHttpService } from '../../services/http/order.service';
 
 @Component({
   selector: 'app-order-details',
@@ -63,7 +62,6 @@ if (cartString) {
     if(!(order.quantityOrder >= order.product.stock)){
       order.quantityOrder++;
       this.cart!.totalPrice += order.product.price;
-      console.log(this.cart)
 
     }
    
@@ -79,32 +77,7 @@ if (cartString) {
     }
   }
 
-  get totalAmount(){
-    return this.cart?.totalPrice ?? 0 - (this.cart?.totalDiscount?? 0) ?? 0;
-
-
-  }
-
-  finalizePurchase(){
-    this.loading = true;
-    this.cartService.finalizePurchase(this.cart!).subscribe(
-      {
-        next: () => {
-          this.localStorageService.remove('currentCart')
-          this.loading = false;
-          this.purchaseCompleted = true;
-          alert("Compra realizada con éxito")
-         
-        },
-        error: (err) =>  {
-          this.hasError = true;
-          console.error(err)
-        },
-        complete: ()=> this.router.navigate(['/'])
-
-        
-      }
-    )
-  
+  continue(){
+    this.router.navigate(['confirmation-page'])
   }
 }
