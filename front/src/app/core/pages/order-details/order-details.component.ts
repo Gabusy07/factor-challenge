@@ -78,7 +78,8 @@ export class OrderDetailsComponent implements OnDestroy {
   private saveCart(callback?: () => void) {
     if (this.cart) {
       this.cartService.update(this.cart, this.userId).pipe(
-        tap(() => {
+        tap((result) => {
+          this.localStorageService.set('currentCart', result)
           if (callback) {
             callback();
           }
