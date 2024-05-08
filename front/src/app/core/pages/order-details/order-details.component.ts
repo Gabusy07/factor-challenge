@@ -79,6 +79,12 @@ if (cartString) {
     }
   }
 
+  get totalAmount(){
+    return this.cart?.totalPrice ?? 0 - (this.cart?.totalDiscount?? 0) ?? 0;
+
+
+  }
+
   finalizePurchase(){
     this.loading = true;
     this.cartService.finalizePurchase(this.cart!).subscribe(
