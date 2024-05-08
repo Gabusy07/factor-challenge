@@ -14,6 +14,7 @@ import { LocalStorageService } from 'src/app/common/local-storage.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent implements OnInit {
+
   products: Product[] = [];
   loading: Boolean = false;
   hasError: boolean = false;
@@ -53,7 +54,7 @@ export class HomeComponent implements OnInit {
 
   addProductToCart(product: Product) {
     this.loading = true;
-    let createdOrder = this.createNewOrder(product);
+    let createdOrder = this.getNewOrder(product);
     this.orderHttpService.createOrder(createdOrder).subscribe({
       next: () => {
         this.cartService.obtainCart(this.userId).subscribe({
@@ -72,11 +73,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
-  createNewOrder(product: Product): OrderRequest {
+  getNewOrder(product: Product): OrderRequest {
     return {
       quantityOrder: 1,
       productId: product.id,
       cartId: this.cart?.id || 0,
     };
+  }
+
+  canAddProduct(product : Product): Boolean {
+    const productExistsInCart = this.cart?.productOrders.some(order => order.product.id === product.id);
+    if (!productExistsInCart) {
+      return false;
+    }
+   
+    return true;
   }
 }
