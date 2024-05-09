@@ -8,6 +8,7 @@ import { LocalStorageService } from 'src/app/common/local-storage.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
+
   private username: string | null;
 
   constructor(
@@ -33,4 +34,9 @@ export class HeaderComponent {
   navigateToOrder() {
     this.router.navigate(['/order-details']);
   }
+
+  //TODO  implementar buscador
+  onClick() {
+    throw new Error('Method not implemented.');
+    }
 }

@@ -10,6 +10,7 @@ import { MainRoutingModule } from './main-routing.module';
 import { CommonModule } from '@angular/common';
 import { TruncatePipe } from '../pipes/truncate.pipe';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ConfirmPurchasePageComponent } from './pages/confirm-purchase-page/confirm-purchase-page.component';
 
 
 
@@ -20,7 +21,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     CardComponent,
     OrderDetailsComponent,
-    TruncatePipe
+    TruncatePipe,
+    ConfirmPurchasePageComponent
   ],
   imports: [
     CommonModule,

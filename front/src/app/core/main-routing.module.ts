@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { OrderDetailsComponent } from './pages/order-details/order-details.component';
 import { MainLayoutComponent } from './main-layout/main-layout.component';
+import { ConfirmPurchasePageComponent } from './pages/confirm-purchase-page/confirm-purchase-page.component';
 
 const routes: Routes = [
 
@@ -12,8 +13,7 @@ const routes: Routes = [
     children: [
       { path: '', component: HomeComponent },
       { path: 'order-details', component: OrderDetailsComponent },
-      // aqui iria component para registro
-    
+      { path: 'confirmation-page', component: ConfirmPurchasePageComponent },
     ]
   }
 ];

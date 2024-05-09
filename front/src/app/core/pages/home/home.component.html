@@ -10,7 +10,7 @@
           [imgSrc]="product.image"
           [title]="product.name"
           [price]="product.price"
-          [disabled] = "!cart"
+          [disabled] = "canAddProduct(product)"
           (buttonClicked)="addProductToCart(product)"
         ></app-card>
       </div>
