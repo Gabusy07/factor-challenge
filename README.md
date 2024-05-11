@@ -14,6 +14,8 @@
 
 ## General
 Proyecto prueba tecnica ecommerce. Fecha limite Mayo/06/2024 20hrs
+# Actualizacion v 0.0.2 Mayo/08/2024
+
 
 ## Sobre estructura del proyecto:
 >  El proyecto está dividido en dos aplicaciones: una aplicación backend y una frontend.
