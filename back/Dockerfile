@@ -3,7 +3,7 @@ RUN apt-get update
 RUN apt-get install openjdk:17-jdk-slim -y
 COPY . .
 
-WORKDIR /ecommerce
+WORKDIR /back
 
 ENV DB_HOST postgres_db
 ENV DB_PORT 5432
@@ -29,7 +29,7 @@ RUN ./docker-compose build
 
 FROM openjdk:17-jdk-slim
 
-WORKDIR /ecommerce
+WORKDIR /back
 #RUN mkdir ./logs
 COPY /target/ecommerce-0.0.2.jar .
 COPY src/main/resources/*.sql /docker-entrypoint-initdb.d/
