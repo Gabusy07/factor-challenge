@@ -1,4 +1,8 @@
-FROM openjdk:17-jdk-slim as builder
+FROM ubuntu:latest as builder
+RUN apt-get update
+RUN apt-get install openjdk:17-jdk-slim -y
+COPY . .
+RUN ./gradlew bootJr --no-deamon
 
 WORKDIR /app
 
@@ -26,8 +30,8 @@ FROM openjdk:17-jdk-slim
 
 WORKDIR /ecommerce
 #RUN mkdir ./logs
-COPY /target/ecommerce-0.0.1.jar .
+COPY /target/ecommerce-0.0.2.jar .
 COPY src/main/resources/*.sql /docker-entrypoint-initdb.d/
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "ecommerce-0.0.1.jar"]
+ENTRYPOINT ["java", "-jar", "ecommerce-0.0.2.jar"]

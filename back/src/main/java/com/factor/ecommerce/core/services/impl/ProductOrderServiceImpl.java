@@ -47,25 +47,36 @@ public class ProductOrderServiceImpl implements ProductOrderService {
 
     @Transactional
     @Override
-    public Optional<ProductOrder> createOrder(ProductOrderRequest request) {
-        Optional<Cart> c_op = cartRepository.findById(request.getCartId());
-        Optional<Product> p_op = productService.getProduct(request.getProductId());
-        if ( c_op.isPresent() && p_op.isPresent()){
-            Cart cart = c_op.get();
-            ProductOrder item = new ProductOrder.Builder().quantityOrder(
-                            request.getQuantityOrder())
-                    .cart(cart)
-                    .product(p_op.get())
+    public ProductOrder createOrder(ProductOrderRequest request) {
+        Cart cart = cartRepository.findById(request.getCartId()).orElse(null);
+        Product product = productService.getProduct(request.getProductId()).orElse(null);
+
+        ProductOrder item;
+        Optional<ProductOrder> orderOp = productOrderRepository.findByCartAndProduct(cart, product);
+
+        if (orderOp.isPresent()) {
+            ProductOrder oldOrder = orderOp.get();
+            item = new ProductOrder.Builder()
+                    .quantityOrder(oldOrder.getQuantityOrder() + request.getQuantityOrder())
+                    .cart(oldOrder.getCart())
+                    .product(oldOrder.getProduct())
                     .build();
-
-            ProductOrder po = productOrderRepository.save(item);
-            cart.getProducts().add(po);
-            cartRepository.save(cart);
-            return Optional.of(productOrderRepository.save(item));
+        } else {
+            item = new ProductOrder.Builder()
+                    .quantityOrder(request.getQuantityOrder())
+                    .cart(cart)
+                    .product(product)
+                    .build();
         }
-        return Optional.empty();
-    }
 
+        ProductOrder po = productOrderRepository.save(item);
+
+        if (cart != null) {
+            cart.getOrders().add(po);
+            cartRepository.save(cart);
+        }
+        return po;
+    }
     @Override
     public Boolean deleteProductOrder(Integer id) {
         Optional<ProductOrder> p = productOrderRepository.findById(id);

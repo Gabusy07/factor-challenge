@@ -3,6 +3,7 @@ package com.factor.ecommerce.core.controller.api;
 import com.factor.ecommerce.core.dto.CartDTO;
 import com.factor.ecommerce.core.model.Cart;
 import com.factor.ecommerce.core.services.interfaces.CartService;
+import com.factor.ecommerce.exception.ProductException;
 import jakarta.persistence.EntityNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,13 +53,17 @@ public class CartController {
 
     @PostMapping("executePurchase")
     public ResponseEntity<?> executePurchase(@RequestBody CartDTO cart) {
-        Boolean hasBeenExecuted = cartService.executePurchase(cart);
-        if(hasBeenExecuted){
-            return ResponseEntity.status(HttpStatus.OK).build();
+        try {
+             cartService.executePurchase(cart);
+                return ResponseEntity.status(HttpStatus.OK).build();
+            }catch (ProductException e){
+            logger.error(e.getMessage());
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
 
     }
+
 
 }
 

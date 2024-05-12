@@ -22,10 +22,15 @@ public class ProductOrderRequest {
         return cartId;
     }
 
+
+
     public static class Builder {
+
         private Integer quantityOrder;
         private Integer productId;
         private Integer cartId;
+
+
 
         public ProductOrderRequest.Builder quantityOrder(Integer quantityOrder) {
             this.quantityOrder = quantityOrder;

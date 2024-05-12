@@ -44,8 +44,8 @@ public class ProductOrderController {
 
     @PostMapping("create")
     public ResponseEntity<?> create(@RequestBody ProductOrderRequest request){
-        Optional<ProductOrder> op = productOrderService.createOrder(request);
-        if(op.isEmpty()){
+        ProductOrder order = productOrderService.createOrder(request);
+        if(order == null){
             return ResponseEntity.status(HttpStatusCode.valueOf(501)).build();
         }
         return ResponseEntity.ok().build();

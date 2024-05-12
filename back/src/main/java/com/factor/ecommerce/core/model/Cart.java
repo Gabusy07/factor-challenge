@@ -52,7 +52,7 @@ public class Cart{
     }
 
 
-    public List<ProductOrder> getProducts() {
+    public List<ProductOrder> getOrders() {
         return productOrders;
     }
 

@@ -14,6 +14,8 @@ public class CartDTO {
     private Boolean isActive;
     private LocalDateTime initialDate;
 
+    private Double totalDiscount;
+
     private List<ProductOrder> productOrders = new ArrayList<>();
 
     public Integer getId() {
@@ -49,13 +51,21 @@ public class CartDTO {
     }
 
 
-
     public List<ProductOrder> getProductOrders() {
         return productOrders;
     }
 
     public void setProductOrders(List<ProductOrder> productOrders) {
         this.productOrders = productOrders;
+    }
+
+
+    public Double getTotalDiscount() {
+        return totalDiscount;
+    }
+
+    public void setTotalDiscount(Double totalDiscount) {
+        this.totalDiscount = totalDiscount;
     }
 
     @Override
@@ -65,23 +75,8 @@ public class CartDTO {
                 ", totalPrice=" + totalPrice +
                 ", isActive=" + isActive +
                 ", initialDate=" + initialDate +
+                ", totalDiscount=" + totalDiscount +
                 ", productOrders=" + productOrders +
                 '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        CartDTO cartDTO = (CartDTO) o;
-        return id.equals(cartDTO.id) && Objects.equals(totalPrice, cartDTO.totalPrice)
-                && Objects.equals(isActive, cartDTO.isActive)
-                && Objects.equals(initialDate, cartDTO.initialDate)
-                && Objects.equals(productOrders, cartDTO.productOrders);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, totalPrice, isActive, initialDate, productOrders);
     }
 }
