@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, tap, throwError } from 'rxjs';
 import { LocalStorageService } from 'src/app/common/local-storage.service';
 import { LoginResponse } from '../interfaces/LoginResponse';
-import { environment as env } from 'src/environments/environment.dev';
+import { environment as env } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root'
