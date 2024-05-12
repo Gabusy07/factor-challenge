@@ -2,7 +2,6 @@ FROM ubuntu:latest as builder
 RUN apt-get update
 RUN apt-get install openjdk:17-jdk-slim -y
 COPY . .
-RUN ./gradlew bootJr --no-deamon
 
 WORKDIR /app
 
