@@ -3,7 +3,7 @@ RUN apt-get update
 RUN apt-get install openjdk:17-jdk-slim -y
 COPY . .
 
-WORKDIR /app
+WORKDIR /ecommerce
 
 ENV DB_HOST postgres_db
 ENV DB_PORT 5432
@@ -17,11 +17,13 @@ COPY pom.xml ./
 
 RUN ./mvnw clean package -Dmaven.test.skip -Dmaven.main.skip -Dspring-boot.repackage.skip && rm -r ./target/
 
+RUN ./mvnw clean package -DskipTests
 RUN ./mvnw dependency:go-offline
 
 COPY src/ ./src
+RUN mvn package -DskipTests
 
-RUN ./mvnw clean package -DskipTests
+
 
 RUN ./docker-compose build
 
