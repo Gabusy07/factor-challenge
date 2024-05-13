@@ -82,6 +82,7 @@ npm run start:dev
 
 ### Backend (Swagger)
 Para acceder a swagger ve a http://localhost:8080/swagger-ui/index.html#.
+Para acceder a la vista ve a localhost:4200
 
 ### Database
 
