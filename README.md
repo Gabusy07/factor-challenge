@@ -19,7 +19,7 @@ Proyecto prueba tecnica ecommerce. Fecha limite Mayo/06/2024 20hrs
 ## Sobre estructura del proyecto:
 >  El proyecto está dividido en dos aplicaciones: una aplicación backend y una frontend.
 El backend está construido con una arquitectura de tipo monolítica. Existen dos módulos principales en esta aplicación. El primero es un módulo para autenticación, mientras que el segundo se encuentra en el directorio /core y representa el núcleo de esa aplicación.
-El frontend sigue un diseño parecido, dividido en dos módulos principales: auth y core, junto con módulos que contienen archivos de componentes compartidos. Ambas aplicaciones siguen el diseño MVC y de capas.
+El frontend sigue un diseño parecido, dividido en dos módulos principales: auth y core, junto con directorios que contienen archivos de componentes compartidos. Ambas aplicaciones siguen el diseño MVC y de capas.
 
 
 ## Tecnologias
