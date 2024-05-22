@@ -1,0 +1,3 @@
+com\factor\ecommerce\core\services\impl\ProductServiceImplTest.class
+com\factor\ecommerce\core\services\impl\CartServiceImplTest.class
+com\factor\ecommerce\EcommerceApplicationTests.class

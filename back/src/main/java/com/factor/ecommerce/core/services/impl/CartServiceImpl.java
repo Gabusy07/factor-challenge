@@ -5,11 +5,14 @@ import com.factor.ecommerce.auth.service.UserService;
 import com.factor.ecommerce.core.dto.CartDTO;
 import com.factor.ecommerce.core.mapper.CartMapper;
 import com.factor.ecommerce.core.model.Cart;
+import com.factor.ecommerce.core.model.Product;
 import com.factor.ecommerce.core.model.ProductOrder;
 import com.factor.ecommerce.core.persistence.repository.CartRepository;
+import com.factor.ecommerce.core.persistence.repository.ProductRepository;
 import com.factor.ecommerce.core.services.interfaces.CartService;
 import com.factor.ecommerce.core.services.interfaces.DiscountService;
 import com.factor.ecommerce.core.services.interfaces.ProductOrderService;
+import com.factor.ecommerce.exception.ProductException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 
@@ -28,6 +32,8 @@ public class CartServiceImpl implements CartService {
     private static final Logger logger = LoggerFactory.getLogger(CartServiceImpl.class);
 
     private final CartRepository cartRepository;
+
+    private final ProductRepository productRepository;
     private final UserService userService;
     private final DiscountService discountService;
     private final CartMapper cartMapper;
@@ -36,11 +42,12 @@ public class CartServiceImpl implements CartService {
 
 
     public CartServiceImpl(CartRepository cartRepository,
-                           UserService userService,
+                           ProductRepository productRepository, UserService userService,
                            DiscountService discountService,
                            CartMapper cartMapper,
                            ProductOrderService productOrderService) {
         this.cartRepository = cartRepository;
+        this.productRepository = productRepository;
         this.userService = userService;
         this.discountService = discountService;
         this.cartMapper = cartMapper;
@@ -68,27 +75,24 @@ public class CartServiceImpl implements CartService {
             return cartMapper.cartToCartDTO(cartRepository.save(oldCart));
         }
 
-
-
         User user = userOptional.get();
-
         Cart cartUpdated = updateCartProducts(
                 oldCart,
                 productOrders);
 
-        Double totalPrice = calculateTotalPrice(cartUpdated, user);
-
-        cartUpdated.setTotalPrice(totalPrice);
-        System.out.println(totalPrice);
-        Cart cartSaved = cartRepository.save(cartUpdated);
-        return cartMapper.cartToCartDTO(cartSaved);
+        Map<String, Double> totalAmountAndDiscount = getTotalAmountCalculatedAndDiscount(cartUpdated, user);
+        
+        cartUpdated.setTotalPrice(totalAmountAndDiscount.get("totalAmountAfterDiscount"));
+        CartDTO cartSaved = cartMapper.cartToCartDTO(cartRepository.save(cartUpdated));
+        cartSaved.setTotalDiscount(totalAmountAndDiscount.get("discountAmount"));
+        return cartSaved;
     }
 
     private List<ProductOrder> saveAllProductOrders(CartDTO cartDTO) {
         List<ProductOrder> productOrders =  new ArrayList<>();
         for (ProductOrder order : cartDTO.getProductOrders()){
             ProductOrder p = productOrderService.update(order.getId(), order);
-            productOrders.add(p);
+            if (p.getQuantityOrder() > 0) productOrders.add(p);
         }
         return productOrders;
     }
@@ -107,11 +111,11 @@ public class CartServiceImpl implements CartService {
     }
 
 
-    private Cart updateCart(Cart oldCart, Double totalPrice) {
+    private Cart updateCart(Cart oldCart) {
         return new Cart.Builder()
                 .id(oldCart.getId())
                 .isActive(oldCart.getActive())
-                .totalPrice(totalPrice)
+                //.totalPrice(totalPrice)
                 .user(oldCart.getUser())
                 .maxDateAvailable(oldCart.getMaxDateAvailable())
                 .productOrders(oldCart.getProductOrders())
@@ -145,10 +149,12 @@ public class CartServiceImpl implements CartService {
             return Optional.ofNullable(cartMapper.cartToCartDTO(create(user)));
         }
 
-        Double totalPrice = calculateTotalPrice(oldCart, user);
+        Map<String, Double> totalAmountAndDiscount = getTotalAmountCalculatedAndDiscount(oldCart, user);
 
-        Cart updatedCart = updateCart(oldCart, totalPrice);
+        Cart updatedCart = updateCart(oldCart);
         CartDTO cartDTO = cartMapper.cartToCartDTO(updatedCart);
+        cartDTO.setTotalDiscount(totalAmountAndDiscount.get("discountAmount"));
+        cartDTO.setTotalPrice(totalAmountAndDiscount.get("totalAmountAfterDiscount"));
 
         return Optional.of(cartDTO);
     }
@@ -157,18 +163,25 @@ public class CartServiceImpl implements CartService {
         return cart.getMaxDateAvailable().isBefore(LocalDateTime.now());
     }
 
-    private Double calculateTotalPrice(Cart cart, User user) {
+    private Map<String, Double> getTotalAmountCalculatedAndDiscount(Cart cart, User user) {
         return discountService.applyDiscount(cart, user);
     }
 
+    @Transactional
     @Override
-    public Boolean executePurchase(CartDTO cartDTO) {
+    public void executePurchase(CartDTO cartDTO) {
         Cart existingCart = cartRepository.findById(cartDTO.getId()).orElseThrow(
                 () -> new EntityNotFoundException("Cart " + cartDTO.getId() + " not found")
         );
+        List<ProductOrder> orders = existingCart.getProductOrders();
+        for (ProductOrder po : orders){
+            Product p = po.getProduct();
+            p.decreaseStock(po.getQuantityOrder());
+            if (p.getStock() < 0) throw new ProductException("Non valid stock result");
+            productRepository.save(p);
+        }
         existingCart.setActive(false);
         cartRepository.save(existingCart);
-        return true;
     }
 
     @Transactional

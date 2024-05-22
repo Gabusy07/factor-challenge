@@ -11,7 +11,7 @@ public interface CartService {
     CartDTO update(CartDTO cartDto, Integer userId);
     Optional<CartDTO> getCart(Integer userId);
 
-    Boolean executePurchase(CartDTO cartDTO);
+    void executePurchase(CartDTO cartDTO);
 
 
 }

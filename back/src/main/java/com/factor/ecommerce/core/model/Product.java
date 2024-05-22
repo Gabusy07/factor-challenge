@@ -53,24 +53,17 @@ public class Product{
         return image;
     }
 
+
     public String getDescription() {
         return description;
     }
 
-    public boolean increaseStock(Integer amount) {
-        if (amount < 0) {
-            return false;
-        }
+    public void increaseStock(Integer amount) {
         this.stock += amount;
-        return true;
     }
 
-    public boolean decreaseStock(Integer amount) {
-        if (amount < 0 || amount > this.stock) {
-            return false;
-        }
-        this.stock -= amount;
-        return true;
+    public void decreaseStock(Integer amount) {
+        if ( amount < this.stock && ((this.stock - amount) >= 0))  this.stock -= amount;
     }
 
     public static class Builder {
